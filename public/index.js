@@ -5,5 +5,5 @@ var isTouchDevice =
 	navigator.msMaxTouchPoints > 0;
 
 if (isTouchDevice) {
-	document.querySelector(".white").style.display = "none";
+	document.querySelector("custom-section > .white").remove();
 }
