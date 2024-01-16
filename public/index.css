@@ -1,0 +1,62 @@
+:root {
+	--clr-bg: black;
+	--clr-text: white;
+	--system-ui-font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	--flashlight-radius: 70px;
+}
+* {
+	padding: 0;
+	margin: 0;
+}
+body {
+	min-height: 100vh;
+	width: 100%;
+	background: var(--clr-bg);
+	color: var(--clr-text);
+	font-family: var(--system-ui-font);
+}
+.black-and-white {
+	width: 100%;
+	height: 100vh;
+}
+
+.full-screen {
+	position: absolute;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.full-screen.white {
+	background: white;
+	color: black;
+	clip-path: circle(
+		var(--flashlight-radius) at var(--mouse-x, -100vw) var(--mouse-y, -100vh)
+	);
+	animation: all 0.1ms;
+}
+
+.centered-h1 {
+	width: max-content;
+	font-size: 5vw;
+}
+
+.centered-h1 {
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+/* Tablets */
+@media only screen and (min-width: 600px) {
+	.centered-h1 {
+		font-size: 2em;
+	}
+}
+/* Desktop */
+@media only screen and (min-width: 768px) {
+	.centered-h1 {
+		font-size: 2em;
+	}
+}

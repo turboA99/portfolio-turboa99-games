@@ -1,0 +1,15 @@
+{
+	"name": "blog-turboa99-games",
+	"version": "0.0.1",
+	"description": "Blog of the turboA99 game developer",
+	"main": "index.js",
+	"scripts": {
+		"alpha": "firebase hosting:channel:deploy alpha",
+		"build": "webpack"
+	},
+	"author": "turboA99",
+	"license": "MIT",
+	"dependencies": {
+		"webpack": "^5.89.0"
+	}
+}
