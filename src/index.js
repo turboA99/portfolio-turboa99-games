@@ -1,15 +1,24 @@
-import { initializeApp } from "firebase/app";
+var isTouchDevice =
+	"ontouchstart" in window ||
+	navigator.maxTouchPoints > 0 ||
+	navigator.msMaxTouchPoints > 0;
+var isTouchUsed = isTouchDevice && event.type === "touchstart";
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-	apiKey: "AIzaSyAymRuyzskddedlToAKhbTxtN1gan2oJIM",
-	authDomain: "turboa99.firebaseapp.com",
-	projectId: "turboa99",
-	storageBucket: "turboa99.appspot.com",
-	messagingSenderId: "870083818836",
-	appId: "1:870083818836:web:85066fd6c92740135c84c1",
-};
+let black_and_white = document.querySelector(".black-and-white");
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app);
+let lastMouseX, lastMouseY;
+lastMouseX = undefined;
+lastMouseY = undefined;
+let mouseVelocityX, mouseVelocityY;
+mouseVelocityX = 0;
+mouseVelocityY = 0;
+
+if (!isTouchUsed) {
+	document.querySelector(".white").style.display = "relative";
+	black_and_white.addEventListener("mousemove", (ev) => {
+		black_and_white.style.setProperty("--mouse-x", ev.clientX + "px");
+		black_and_white.style.setProperty("--mouse-y", ev.clientY + "px");
+	});
+} else {
+	document.querySelector(".white").style.display = "none";
+}
