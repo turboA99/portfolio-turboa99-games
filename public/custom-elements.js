@@ -14,8 +14,6 @@ class SectionElement extends HTMLElement {
 			this.addEventListener("mousemove", (ev) => {
 				this.mousePos.x = ev.clientX;
 				this.mousePos.y = ev.clientY;
-				this.style.setProperty("--mouse-x", this.mousePos.x + "px");
-				this.style.setProperty("--mouse-y", this.mousePos.y + "px");
 				this.targetPos = this.mousePos;
 				if (!this.isMoveRunning) this.moveToTarget();
 			});
