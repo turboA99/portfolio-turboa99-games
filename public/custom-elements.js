@@ -28,9 +28,10 @@ class SectionElement extends HTMLElement {
 					: this.targetPos - this.curPos;
 			this.style.setProperty("--mouse-x", this.curPos.x + "px");
 			this.style.setProperty("--mouse-y", this.curPos.y + "px");
+			await 1;
 		}
 		this.isMoveRunning = false;
-		return;
+		return 1;
 	}
 }
 
