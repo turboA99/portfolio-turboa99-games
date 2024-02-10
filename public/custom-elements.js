@@ -30,6 +30,7 @@ class SectionElement extends HTMLElement {
 			this.style.setProperty("--mouse-y", this.curPos.y);
 		}
 		this.isMoveRunning = false;
+		return;
 	}
 }
 
