@@ -24,10 +24,21 @@ class SectionElement extends HTMLElement {
 	async moveToTarget() {
 		this.isMoveRunning = true;
 		while (this.curPos != this.targetPos) {
-			this.curPos +=
-				this.targetPos - this.curPos > this.speedThreashold
-					? this.speedThreashold
-					: this.targetPos - this.curPos;
+			let magnitude = Math.sqrt(
+				Math.pow(this.targetPos.x - this.curPos.x, 2),
+				Math.pow(this.targetPos.y - this.curPos.y, 2)
+			);
+			if (magnitude > this.speedThreashold) {
+				this.curPos.x +=
+					((this.targetPos.x - this.curPos.x) / magnitude) *
+					this.speedThreashold;
+				this.curPos.y +=
+					((this.targetPos.y - this.curPos.y) / magnitude) *
+					this.speedThreashold;
+			} else {
+				this.curPos.x += this.targetPos.x - this.curPos.x;
+				this.curPos.y += this.targetPos.y - this.curPos.y;
+			}
 			this.style.setProperty("--mouse-x", this.curPos.x + "px");
 			this.style.setProperty("--mouse-y", this.curPos.y + "px");
 			console.log(this.curPos);
