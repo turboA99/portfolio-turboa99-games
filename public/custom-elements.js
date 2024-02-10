@@ -23,6 +23,7 @@ class SectionElement extends HTMLElement {
 	}
 	async moveToTarget() {
 		this.isMoveRunning = true;
+		console.log(this.isMoveRunning);
 		while (this.curPos != this.targetPos) {
 			this.curPos +=
 				this.targetPos - this.curPos > this.speedThreashold
@@ -32,6 +33,7 @@ class SectionElement extends HTMLElement {
 			this.style.setProperty("--mouse-y", this.curPos.y + "px");
 		}
 		this.isMoveRunning = false;
+		console.log(this.isMoveRunning);
 		return 1;
 	}
 }
