@@ -6,11 +6,13 @@ class SectionElement extends HTMLElement {
 		this.curPos = this.targetPos;
 		this.speedThreashold = 20;
 		this.isMoveRunning = false;
-	}
-	connectedCallback() {
 		if (this.hasAttribute("mouse-over")) {
 			this.style.setProperty("--mouse-x", this.curPos.x + "px");
 			this.style.setProperty("--mouse-y", this.curPos.y + "px");
+		}
+	}
+	connectedCallback() {
+		if (this.hasAttribute("mouse-over")) {
 			this.addEventListener("mousemove", (ev) => {
 				this.mousePos.x = ev.clientX;
 				this.mousePos.y = ev.clientY;
