@@ -1,12 +1,12 @@
 class SectionElement extends HTMLElement {
 	constructor() {
 		super();
-		this.mousePos = { x: 0, y: 0 };
-		this.targetPos = this.mousePos;
-		this.curPos = this.targetPos;
-		this.speedThreashold = 20;
-		this.isMoveRunning = false;
 		if (this.hasAttribute("mouse-over")) {
+			this.mousePos = { x: 0, y: 0 };
+			this.targetPos = this.mousePos;
+			this.curPos = this.targetPos;
+			this.speedThreashold = 20;
+			this.isMoveRunning = false;
 			this.style.setProperty("--mouse-x", this.curPos.x + "px");
 			this.style.setProperty("--mouse-y", this.curPos.y + "px");
 		}
@@ -17,7 +17,7 @@ class SectionElement extends HTMLElement {
 				this.mousePos.x = ev.clientX;
 				this.mousePos.y = ev.clientY;
 				this.targetPos = this.mousePos;
-				if (!this.isMoveRunning) this.moveToTarget();
+				if (!this.isMoveRunning) Promise.resolve(this.moveToTarget());
 			});
 		}
 	}
