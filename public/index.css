@@ -4,6 +4,7 @@
 	--system-ui-font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
 		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	--flashlight-radius: 70px;
+	--logo-size: 4rem;
 }
 * {
 	padding: 0;
@@ -42,6 +43,16 @@ body {
 .centered-h1 {
 	-webkit-user-select: none;
 	user-select: none;
+}
+#logo {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: var(--logo-size);
+	height: var(--logo-size);
+	margin-left: 1rem;
+	pointer-events: none;
+	padding-block: calc(var(--logo-size) * 0.15);
 }
 
 /* Tablets */
