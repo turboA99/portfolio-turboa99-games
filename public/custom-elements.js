@@ -3,12 +3,8 @@ class SectionElement extends HTMLElement {
 		super();
 		if (this.hasAttribute("mouse-over")) {
 			this.mousePos = { x: 0, y: 0 };
-			this.targetPos = this.mousePos;
-			this.curPos = this.targetPos;
-			this.speedThreashold = 2;
-			this.isMoveRunning = false;
-			this.style.setProperty("--mouse-x", this.curPos.x + "px");
-			this.style.setProperty("--mouse-y", this.curPos.y + "px");
+			this.style.setProperty("--mouse-x", this.mousePos.x + "px");
+			this.style.setProperty("--mouse-y", this.mousePos.y + "px");
 		}
 	}
 	connectedCallback() {
@@ -16,35 +12,10 @@ class SectionElement extends HTMLElement {
 			this.addEventListener("mousemove", (ev) => {
 				this.mousePos.x = ev.clientX;
 				this.mousePos.y = ev.clientY;
-				this.targetPos = this.mousePos;
-				if (!this.isMoveRunning) this.moveToTarget();
+				this.style.setProperty("--mouse-x", this.mousePos.x + "px");
+				this.style.setProperty("--mouse-y", this.mousePos.y + "px");
 			});
 		}
-	}
-	async moveToTarget() {
-		this.isMoveRunning = true;
-		while (this.curPos != this.targetPos) {
-			let magnitude = Math.sqrt(
-				Math.pow(this.targetPos.x - this.curPos.x, 2),
-				Math.pow(this.targetPos.y - this.curPos.y, 2)
-			);
-			if (magnitude > this.speedThreashold) {
-				this.curPos.x +=
-					((this.targetPos.x - this.curPos.x) / magnitude) *
-					this.speedThreashold;
-				this.curPos.y +=
-					((this.targetPos.y - this.curPos.y) / magnitude) *
-					this.speedThreashold;
-			} else {
-				this.curPos.x += this.targetPos.x - this.curPos.x;
-				this.curPos.y += this.targetPos.y - this.curPos.y;
-			}
-			this.style.setProperty("--mouse-x", this.curPos.x + "px");
-			this.style.setProperty("--mouse-y", this.curPos.y + "px");
-			console.log(this.curPos);
-		}
-		this.isMoveRunning = false;
-		return 1;
 	}
 }
 
