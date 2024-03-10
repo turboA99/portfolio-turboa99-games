@@ -4,15 +4,8 @@
 	"description": "Blog of the turboA99 game developer",
 	"main": "index.js",
 	"scripts": {
-		"alpha": "firebase hosting:channel:deploy alpha",
-		"build": "webpack"
+		"alpha": "firebase hosting:channel:deploy alpha"
 	},
 	"author": "turboA99",
-	"license": "MIT",
-	"dependencies": {
-		"webpack": "^5.89.0"
-	},
-	"devDependencies": {
-		"webpack-cli": "^5.1.4"
-	}
+	"license": "MIT"
 }
