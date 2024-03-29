@@ -127,6 +127,8 @@ html {
 	}
 	.introduction {
 		flex-direction: row;
+		-webkit-mask-image: linear-gradient(white, white 90%, transparent);
+		mask-image: linear-gradient(white, white 90%, transparent);
 	}
 	.introduction > * {
 		flex-grow: 1;
