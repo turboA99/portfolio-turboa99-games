@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 147.92 142.9">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+      #Layer_2 {
+        transform-origin: 50% 55%;
+        animation: animation linear  20s 0ms infinite;
+      }
+      @keyframes animation {
+	      0% {
+		      transform: translateY(-5%) scale(0.85) rotate(0deg);
+	      }
+	      100% {
+		      transform: translateY(-5%) scale(0.85) rotate(360deg);
+	      }
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <path class="cls-1" d="m94.27,12.63l5.3,10.75c3.3,6.69,9.68,11.32,17.06,12.39l11.86,1.72c18.58,2.7,26,25.53,12.55,38.64l-8.58,8.37c-5.34,5.2-7.78,12.7-6.52,20.05l2.03,11.81c3.17,18.51-16.25,32.62-32.87,23.88l-10.61-5.58c-6.6-3.47-14.48-3.47-21.08,0l-10.61,5.58c-16.62,8.74-36.04-5.38-32.87-23.88l2.03-11.81c1.26-7.35-1.18-14.85-6.52-20.05l-8.58-8.37C-6.58,63.03.84,40.19,19.42,37.49l11.86-1.72c7.38-1.07,13.76-5.71,17.06-12.39l5.3-10.75c8.31-16.84,32.32-16.84,40.63,0Z"/>
+  </g>
+</svg>

@@ -1,5 +1,9 @@
 custom-section {
 	min-height: 100dvh;
+	max-height: 100dvh;
 	width: 100%;
 	display: block;
+}
+custom-section[scroll-snap-allign-start] {
+	scroll-snap-align: start none;
 }
