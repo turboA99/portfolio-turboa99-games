@@ -1,191 +1,191 @@
 :root {
-	--clr-bg: black;
-	--clr-text: white;
-	--clr-accent: hsl(288, 100%, 80%);
-	--system-ui-font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-	--flashlight-radius: 70px;
-	--logo-size: 4rem;
+  --clr-bg: black;
+  --clr-text: white;
+  --clr-accent: hsl(288, 100%, 80%);
+  --system-ui-font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --flashlight-radius: 70px;
+  --logo-size: 4rem;
 }
 * {
-	padding: 0;
-	margin: 0;
-	position: relative;
+  padding: 0;
+  margin: 0;
+  position: relative;
 }
 body {
-	min-height: 100vh;
-	width: 100%;
-	background: var(--clr-bg);
-	color: var(--clr-text);
-	font-family: var(--system-ui-font);
+  min-height: 100vh;
+  width: 100%;
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  font-family: var(--system-ui-font);
 }
 html {
-	scroll-snap-type: y mandatory;
+  scroll-snap-type: y mandatory;
 }
 .full-screen {
-	width: 100%;
-	height: 100dvh;
-}
-
-.introduction > p {
-	font-size: 3vh;
-	padding-inline: 2rem;
-	text-align: center;
-}
-.portrait {
-	width: 80%;
-	margin-inline: auto;
-	margin-top: 2rem;
-	z-index: 1;
-}
-.rounded-star-shape-rotating {
-	-webkit-mask-image: url(./assets/rounded-star-rotating.svg);
-	mask-image: url(./assets/rounded-star-rotating.svg);
-	-webkit-mask-repeat: no-repeat;
-	mask-repeat: no-repeat;
+  width: 100%;
+  height: 100dvh;
 }
 .introduction {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.introduction > p {
+  font-size: 1.2em;
+  padding-inline: 2rem;
+  text-align: left;
+  margin-block: auto;
+}
+.portrait {
+  --inline-margin: 10%;
+  width: calc(100% - calc(var(var(--inline-margin) * 2)));
+  margin-inline: var(--inline-margin);
+  margin-block: 2rem;
+  z-index: 1;
+}
+.rounded-star-shape-rotating {
+  -webkit-mask-image: url(./assets/rounded-star-rotating.svg);
+  mask-image: url(./assets/rounded-star-rotating.svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 .introduction::before {
-	content: "";
-	position: absolute;
-	width: 220%;
-	height: 20vh;
-	background: repeating-linear-gradient(
-		45deg,
-		var(--clr-accent) 0px,
-		transparent 40px
-	);
-	-webkit-mask-image: linear-gradient(black, transparent);
-	mask-image: linear-gradient(black, transparent);
-	top: 0;
-	animation: background-move-along-x 10s ease-in-out 0ms infinite;
+  content: "";
+  position: absolute;
+  width: 220%;
+  height: 20vh;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--clr-accent) 0px,
+    transparent 40px
+  );
+  -webkit-mask-image: linear-gradient(black, transparent);
+  mask-image: linear-gradient(black, transparent);
+  top: 0;
+  animation: background-move-along-x 10s ease-in-out 0ms infinite;
 }
 .introduction::after {
-	content: "";
-	position: absolute;
-	width: 220%;
-	height: 30vh;
-	background: repeating-linear-gradient(
-		45deg,
-		var(--clr-accent) 0px,
-		transparent 40px
-	);
-	opacity: 0.5;
-	-webkit-mask-image: linear-gradient(transparent, black, transparent);
-	mask-image: linear-gradient(transparent, black, transparent);
-	top: 10vh;
-	filter: hue-rotate(25deg);
-	animation: background-move-along-x-backwards 10s ease-in-out 0ms infinite
-		backwards;
+  content: "";
+  position: absolute;
+  width: 220%;
+  height: 30vh;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--clr-accent) 0px,
+    transparent 40px
+  );
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(transparent, black, transparent);
+  mask-image: linear-gradient(transparent, black, transparent);
+  top: 10vh;
+  filter: hue-rotate(25deg);
+  animation: background-move-along-x-backwards 10s ease-in-out 0ms infinite
+    backwards;
 }
 @keyframes background-move-along-x {
-	0% {
-		left: -100vw;
-	}
-	50% {
-		left: 0;
-	}
-	100% {
-		left: -100vw;
-	}
+  0% {
+    left: -100vw;
+  }
+  50% {
+    left: 0;
+  }
+  100% {
+    left: -100vw;
+  }
 }
 @keyframes background-move-along-x-backwards {
-	0% {
-		left: 0;
-	}
-	50% {
-		left: -100vw;
-	}
-	100% {
-		left: 0;
-	}
+  0% {
+    left: 0;
+  }
+  50% {
+    left: -100vw;
+  }
+  100% {
+    left: 0;
+  }
 }
 .introduction > p i {
-	color: var(--clr-accent);
+  color: var(--clr-accent);
 }
 /* Tablets */
 @media only screen and (min-width: 600px) {
-	.introduction > p {
-		font-size: 3vw;
-	}
-	.portrait {
-		margin-top: 0;
-		width: 70%;
-		margin-inline: auto;
-	}
+  .introduction > p {
+    font-size: 1.5em;
+    width: 20em;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .portrait {
+    width: 50vh;
+    margin-inline: auto;
+  }
 }
 /* Desktop */
 @media only screen and (min-width: 768px) {
-	.introduction > p {
-		font-size: 2em;
-		margin-block: auto;
-	}
-	.introduction {
-		flex-direction: row;
-		-webkit-mask-image: linear-gradient(white, white 90%, transparent);
-		mask-image: linear-gradient(white, white 90%, transparent);
-	}
-	.introduction > * {
-		flex-grow: 1;
-	}
-	.portrait {
-		width: 50%;
-		margin-block: auto;
-	}
-	.introduction::before {
-		width: 20vw;
-		height: 220%;
-		background: repeating-linear-gradient(
-			45deg,
-			var(--clr-accent) 0px,
-			transparent 40px
-		);
-		-webkit-mask-image: linear-gradient(90deg, black, transparent);
-		mask-image: linear-gradient(90deg, black, transparent);
-		left: 0;
-		animation: background-move-along-y 10s ease-in-out 0ms infinite backwards;
-	}
-	.introduction::after {
-		width: 30vw;
-		height: 220%;
-		background: repeating-linear-gradient(
-			45deg,
-			var(--clr-accent) 0px,
-			transparent 40px
-		);
-		opacity: 0.5;
-		-webkit-mask-image: linear-gradient(90deg, transparent, black, transparent);
-		mask-image: linear-gradient(90deg, transparent, black, transparent);
-		left: 10vw;
-		filter: hue-rotate(25deg);
-		animation: background-move-along-y-backwards 10s ease-in-out 0ms infinite
-			backwards;
-	}
-	@keyframes background-move-along-y {
-		0% {
-			top: -100vh;
-		}
-		50% {
-			top: 0;
-		}
-		100% {
-			top: -100vh;
-		}
-	}
-	@keyframes background-move-along-y-backwards {
-		0% {
-			top: 0;
-		}
-		50% {
-			top: -100vh;
-		}
-		100% {
-			top: 0;
-		}
-	}
+  .introduction > p {
+    font-size: 1.5em;
+    margin-block: auto;
+    max-width: 40vw;
+  }
+  .introduction {
+    flex-direction: row;
+    -webkit-mask-image: linear-gradient(white, white 90%, transparent);
+    mask-image: linear-gradient(white, white 90%, transparent);
+  }
+  .portrait {
+    width: 60vh;
+    margin-block: auto;
+  }
+  .introduction::before {
+    width: 20vw;
+    height: 220%;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--clr-accent) 0px,
+      transparent 40px
+    );
+    -webkit-mask-image: linear-gradient(90deg, black, transparent);
+    mask-image: linear-gradient(90deg, black, transparent);
+    left: 0;
+    animation: background-move-along-y 10s ease-in-out 0ms infinite backwards;
+  }
+  .introduction::after {
+    width: 30vw;
+    height: 220%;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--clr-accent) 0px,
+      transparent 40px
+    );
+    opacity: 0.5;
+    -webkit-mask-image: linear-gradient(90deg, transparent, black, transparent);
+    mask-image: linear-gradient(90deg, transparent, black, transparent);
+    left: 10vw;
+    filter: hue-rotate(25deg);
+    animation: background-move-along-y-backwards 10s ease-in-out 0ms infinite
+      backwards;
+  }
+  @keyframes background-move-along-y {
+    0% {
+      top: -100vh;
+    }
+    50% {
+      top: 0;
+    }
+    100% {
+      top: -100vh;
+    }
+  }
+  @keyframes background-move-along-y-backwards {
+    0% {
+      top: 0;
+    }
+    50% {
+      top: -100vh;
+    }
+    100% {
+      top: 0;
+    }
+  }
 }
