@@ -1,0 +1,75 @@
+main {
+  view-transition-name: project;
+  background-color: var(--color-background);
+  padding-inline: var(--inline-padding);
+  @media screen and (min-width: 900px) {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+  }
+  #project-name {
+    color: var(--color-accent);
+    @media screen and (min-width: 1025px) {
+      font-size: 4em;
+    }
+  }
+  #project-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: -1;
+    height: 40vh;
+    object-fit: cover;
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 100%);
+    mask-image: linear-gradient(to top, transparent 0%, black 100%);
+    filter: brightness(0.2);
+    @media screen and (min-width: 1025px) {
+      width: 100%;
+      height: 20vw;
+      right: auto;
+    }
+  }
+  .date-tags {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    @media screen and (min-width: 900px) {
+      align-items: flex-end;
+    }
+  }
+  #project-date {
+    color: gray;
+  }
+  #project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding-top: 15px;
+    height: fit-content;
+    span {
+      background-color: var(--color-surface);
+      padding: var(--button-padding);
+      border-radius: 1000px;
+      text-transform: uppercase;
+    }
+    @media screen and (min-width: 900px) {
+      grid-column: 2 / 3;
+    }
+  }
+  #content {
+    @media screen and (min-width: 900px) {
+      grid-column: 1 / 3;
+      columns: 2;
+      gap: 2rem;
+    }
+    :first-child {
+      @media screen and (min-width: 900px) {
+        margin-top: 0;
+      }
+    }
+    p {
+      break-inside: avoid;
+    }
+  }
+}
