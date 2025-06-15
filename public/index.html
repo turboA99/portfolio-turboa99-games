@@ -1,20 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>turboA99 Blog</title>
-		<link rel="stylesheet" href="./index.css" />
-		<script src="./index.js" async></script>
-	</head>
-	<body>
-		<div class="black-and-white">
-			<div class="full-screen black">
-				<h1 class="centered-h1">🚧🛠️Website is in development!🛠️🚧</h1>
-			</div>
-			<div class="full-screen white">
-				<h1 class="centered-h1">🤭😎Website is in development!😎🤭</h1>
-			</div>
-		</div>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home</title>
+    <link rel="stylesheet" href="/shared.css" />
+    <link rel="stylesheet" href="./home.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li active>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href="/projects">Projects</a>
+        </li>
+      </ul>
+    </nav>
+    <main>
+      <section id="hero">
+        <img src="./images/hero.jpg" alt="" />
+        <div class="hero-text">
+          <p>Hello! My name is <b>Artur</b>😀</p>
+          <p>
+            I am currently studying game development at Hanzehogeschool in
+            Groningen, Netherlands 🎮🤓
+          </p>
+          <p>
+            I have passion for programming, especially when it comes to
+            <a href="">games</a>, <a href="">shaders</a>, <a href="">AI</a>,
+            <a href="">Procedural Materials</a> and <a href="">Web</a> 😄
+          </p>
+        </div>
+        <p class="after-hero-text">
+          Check out <a href="/projects"><b>projects</b></a> page!
+        </p>
+      </section>
+      <section id="project-highlights">
+        <h2>Highlighted Projects</h2>
+        <div class="projects-container"></div>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2025 turboA99 Games</p>
+    </footer>
+    <script type="module" src="./home.js"></script>
+  </body>
 </html>
