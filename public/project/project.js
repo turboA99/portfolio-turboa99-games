@@ -23,30 +23,70 @@ const db = getFirestore(app);
 const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id");
 
-const docRef = doc(db, "projects", projectId);
-const docSnapshot = await getDoc(docRef);
+if (projectId) {
+  const docRef = doc(db, "projects", projectId);
+  const docSnapshot = await getDoc(docRef);
 
-document.getElementById("project-name").textContent = docSnapshot.data().name;
-document.getElementById("project-image").src = docSnapshot.data().image;
-document.getElementById("project-image").alt = docSnapshot.data().name;
-const date = new Date(docSnapshot.data().date.seconds * 1000);
-document.getElementById("project-date").dateTime = date;
-document.getElementById("project-date").textContent = date.toLocaleDateString(
-  date.getTimezoneOffset(),
-  {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
+  var projectTitle = document.createElement("h1");
+  projectTitle.textContent = docSnapshot.data().name;
+  document.getElementById("project-name").appendChild(projectTitle);
+  if (docSnapshot.data().github) {
+    var githubIcon = document.createElement("i");
+    githubIcon.className = "fa fa-github";
+    githubIcon.setAttribute("aria-hidden", "true");
+
+    var githubLink = document.createElement("a");
+    githubLink.href = docSnapshot.data().github;
+    githubLink.target = "_blank";
+    githubLink.appendChild(githubIcon);
+    githubLink.id = "github-link";
+    document.getElementById("project-name").appendChild(githubLink);
+    document.getElementById("project-name");
   }
-);
-document.getElementById("content").innerHTML = docSnapshot.data().content;
 
-docSnapshot.data().tags.forEach(async (tagRef) => {
-  const tag = await getDoc(tagRef);
-  if (!tag) return;
-  const tagElement = document.createElement("span");
-  tagElement.textContent = tag.data().name;
-  document.getElementById("project-tags").appendChild(tagElement);
-});
+  if (docSnapshot.data().link) {
+    var downloadIcon = document.createElement("i");
+    downloadIcon.className = "fa fa-download";
+    downloadIcon.setAttribute("aria-hidden", "true");
+
+    var downloadLink = document.createElement("a");
+    downloadLink.href = docSnapshot.data().link;
+    downloadLink.target = "_blank";
+    downloadLink.appendChild(downloadIcon);
+    downloadLink.id = "download-link";
+    document.getElementById("project-name").appendChild(downloadLink);
+  }
+
+  document.getElementById("project-image").src = docSnapshot.data().image;
+  document.getElementById("project-image").alt = docSnapshot.data().name;
+  const date = new Date(docSnapshot.data().date.seconds * 1000);
+  document.getElementById("project-date").dateTime = date;
+  document.getElementById("project-date").textContent = date.toLocaleDateString(
+    date.getTimezoneOffset(),
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }
+  );
+  document.getElementById("content").innerHTML = docSnapshot.data().content;
+
+  var obj = {
+    something: "hello",
+    another: "world",
+  };
+
+  docSnapshot.data().tags.forEach(async (tagId) => {
+    const tag = await getDoc(doc(db, "tags", tagId));
+    if (!tag) return;
+    const tagElement = document.createElement("a");
+    tagElement.textContent = tag.data().name;
+    const searchParams = new URLSearchParams();
+    searchParams.set("tagId", tagId);
+    tagElement.href = `/projects/?${searchParams.toString()}`;
+    tagElement.className = "tag";
+    document.getElementById("project-tags").appendChild(tagElement);
+  });
+}

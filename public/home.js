@@ -4,6 +4,8 @@ import {
   getFirestore,
   getDocs,
   getDoc,
+  query,
+  where,
 } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -21,7 +23,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-var highlights = collection(db, "highlights");
+var projectsCollection = collection(db, "projects");
+const q = query(projectsCollection, where("highlighted", "==", true));
 
 var projectsContainer = document
   .getElementById("project-highlights")
@@ -31,39 +34,18 @@ loadingIndicator.textContent = "Loading projects...";
 loadingIndicator.className = "loading-indicator";
 projectsContainer.appendChild(loadingIndicator);
 
-var projects = [];
-
 async function fetchAndDisplayProjects() {
   try {
-    const docsRefsSnapshot = await getDocs(highlights);
-    const projectPromises = [];
-
-    docsRefsSnapshot.forEach((docSnapshot) => {
-      const projectDocRef = docSnapshot.data().ref;
-      if (projectDocRef) {
-        projectPromises.push(getDoc(projectDocRef));
-      } else {
-        console.warn(
-          "Document reference not found in highlight:",
-          docSnapshot.id
-        );
-      }
-    });
-
-    const projectDocs = await Promise.all(projectPromises);
+    const projectDocs = await getDocs(q);
 
     loadingIndicator.remove();
 
-    const projects = projectDocs
-      .map((doc) => {
-        var data = doc.data();
-        data.id = doc.id;
-        return data;
-      })
-      .filter((data) => data);
+    console.log("Project Documents:", projectDocs);
 
-    projects.forEach((projectData) => {
-      console.log("Project Data:", projectData);
+    projectDocs.forEach((project) => {
+      let projectData = project.data();
+      projectData.id = project.id;
+
       if (
         projectData &&
         projectData.id &&

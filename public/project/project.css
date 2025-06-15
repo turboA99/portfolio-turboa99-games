@@ -7,9 +7,27 @@ main {
     grid-template-columns: max-content 1fr;
   }
   #project-name {
-    color: var(--color-accent);
+    text-wrap: balance;
     @media screen and (min-width: 1025px) {
-      font-size: 4em;
+      max-width: 60vw;
+    }
+    h1 {
+      color: var(--color-accent);
+      display: inline;
+      margin-block: 0;
+      @media screen and (min-width: 1025px) {
+        font-size: 3em;
+        inline-size: 50vw;
+      }
+    }
+    a {
+      font-size: 2em;
+      @media screen and (min-width: 1025px) {
+        font-size: 3em;
+      }
+      &::before {
+        content: " ";
+      }
     }
   }
   #project-image {
@@ -47,11 +65,16 @@ main {
     gap: 15px;
     padding-top: 15px;
     height: fit-content;
-    span {
-      background-color: var(--color-surface);
+    .tag {
+      background-color: var(--color-accent-container);
       padding: var(--button-padding);
       border-radius: 1000px;
       text-transform: uppercase;
+      color: var(--color-accent);
+      &:hover {
+        background-color: var(--color-accent);
+        color: var(--color-on-accent);
+      }
     }
     @media screen and (min-width: 900px) {
       grid-column: 2 / 3;
@@ -70,6 +93,18 @@ main {
     }
     p {
       break-inside: avoid;
+    }
+    section {
+      break-inside: avoid;
+      img {
+        width: 100%;
+        border-radius: var(--medium-rounding);
+      }
+      iframe {
+        width: 100%;
+        border-radius: var(--medium-rounding);
+        aspect-ratio: 16 / 9;
+      }
     }
   }
 }

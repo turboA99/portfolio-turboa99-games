@@ -20,6 +20,11 @@
   --color-text: #ffffff;
   --color-accent: #eb99ff;
   --color-accent-translucent: hsla(from var(--color-accent) h s l / 0.1);
+  --color-accent-container: color-mix(
+    in lab,
+    var(--color-accent) 7%,
+    var(--color-background-variant)
+  );
   --color-on-accent: #000000;
   --color-divider: hsla(0, 0, 50%, 0.4);
   --color-surface: #333333;
@@ -121,6 +126,13 @@ a {
   transition: all 0.1s ease-out;
   &:hover {
     color: hsla(from var(--color-accent) h s 85% / 1);
+  }
+  .fa {
+    color: var(--color-accent);
+    transition: all 0.1s ease-out;
+    &:hover {
+      color: hsla(from var(--color-accent) h s 85% / 1);
+    }
   }
 }
 p {
