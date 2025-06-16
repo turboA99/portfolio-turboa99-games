@@ -45,12 +45,25 @@ if (projectId) {
   }
 
   if (docSnapshot.data().link) {
+    var webIcon = document.createElement("i");
+    webIcon.className = "fa fa-globe";
+    webIcon.setAttribute("aria-hidden", "true");
+
+    var webLink = document.createElement("a");
+    webLink.href = docSnapshot.data().link;
+    webLink.target = "_blank";
+    webLink.appendChild(webIcon);
+    webLink.id = "download-link";
+    document.getElementById("project-name").appendChild(webLink);
+  }
+
+  if (docSnapshot.data().download) {
     var downloadIcon = document.createElement("i");
     downloadIcon.className = "fa fa-download";
     downloadIcon.setAttribute("aria-hidden", "true");
 
     var downloadLink = document.createElement("a");
-    downloadLink.href = docSnapshot.data().link;
+    downloadLink.href = docSnapshot.data().download;
     downloadLink.target = "_blank";
     downloadLink.appendChild(downloadIcon);
     downloadLink.id = "download-link";
