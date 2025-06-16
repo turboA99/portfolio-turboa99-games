@@ -40,8 +40,6 @@ async function fetchAndDisplayProjects() {
 
     loadingIndicator.remove();
 
-    console.log("Project Documents:", projectDocs);
-
     projectDocs.forEach((project) => {
       let projectData = project.data();
       projectData.id = project.id;
@@ -62,13 +60,13 @@ async function fetchAndDisplayProjects() {
       } else {
         console.warn("Skipping project with incomplete data:", projectData);
       }
-      var projectElement = document.createElement("a");
-      projectElement.href = `/projects`;
-      projectElement.className = "project";
-      projectElement.id = "all-projects";
-      projectElement.textContent = "All Projects";
-      projectsContainer.appendChild(projectElement);
     });
+    var projectElement = document.createElement("a");
+    projectElement.href = `/projects`;
+    projectElement.className = "project";
+    projectElement.id = "all-projects";
+    projectElement.textContent = "All Projects";
+    projectsContainer.appendChild(projectElement);
   } catch (error) {
     console.error("Error fetching projects: ", error);
     projectsContainer.innerHTML =
