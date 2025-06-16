@@ -22,6 +22,7 @@
         from var(--color-background-variant) h s l / 0.65
       );
       --color-text: #ffffff;
+      --color-text-low-contrast: gray;
       --color-accent: #eb99ff;
       --color-accent-translucent: hsla(from var(--color-accent) h s l / 0.1);
       --color-accent-gradient: hsla(from var(--color-accent) h s l / 0.2);
@@ -41,6 +42,7 @@
         from var(--color-background-variant) h s l / 0.65
       );
       --color-text: #000000;
+      --color-text-low-contrast: rgb(68, 68, 68);
       --color-accent: #c147df;
       --color-accent-translucent: hsla(from var(--color-accent) h s l / 0.1);
       --color-accent-gradient: hsla(from var(--color-accent) h s l / 0.2);
