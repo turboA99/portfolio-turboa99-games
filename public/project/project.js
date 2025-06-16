@@ -23,6 +23,10 @@ const db = getFirestore(app);
 const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id");
 
+if (!projectId) {
+  projectId = location.pathname.split("/").pop();
+}
+
 if (projectId) {
   const docRef = doc(db, "projects", projectId);
   const docSnapshot = await getDoc(docRef);

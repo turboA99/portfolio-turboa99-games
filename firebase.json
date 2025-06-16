@@ -6,12 +6,12 @@
   "hosting": {
     "site": "turboa99-blog",
     "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
+      {
+        "source": "/project/**",
+        "destination": "/project/index.html"
+      },
       {
         "source": "**",
         "destination": "/index.html"
