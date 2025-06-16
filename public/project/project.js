@@ -30,6 +30,7 @@ if (projectId) {
   var projectTitle = document.createElement("h1");
   projectTitle.textContent = docSnapshot.data().name;
   document.getElementById("project-name").appendChild(projectTitle);
+  document.title = docSnapshot.data().name + " - TurboA99";
   if (docSnapshot.data().github) {
     var githubIcon = document.createElement("i");
     githubIcon.className = "fa fa-github";
