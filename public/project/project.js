@@ -24,7 +24,10 @@ const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id");
 
 if (!projectId) {
-  projectId = location.pathname.split("/").pop();
+  projectId = location.href
+    .split("/")
+    .filter((str) => str)
+    .pop();
 }
 
 if (projectId) {
