@@ -107,7 +107,7 @@ async function fetchAndDisplayProjects() {
         projectData.image
       ) {
         var projectElement = document.createElement("a");
-        projectElement.href = `/project/?id=${projectData.id}`;
+        projectElement.href = `/project/${projectData.id}/`;
         projectElement.className = "project";
         projectElement.innerHTML = `
                         <img src="${projectData.image}" alt="${projectData.name}" />
@@ -137,7 +137,11 @@ async function selectTag(tagId, pushState = true) {
   }
 
   if (tagId === selectedTag) {
-    selectedTag = "";
+    selectedTag = "all";
+    document.getElementById(`tag-all`).toggleAttribute("selected", true);
+    if (pushState) {
+      history.pushState(null, "", window.location.pathname + `?tagId=all`);
+    }
     tagElement.toggleAttribute("selected", false);
   } else {
     document

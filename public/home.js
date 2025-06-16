@@ -51,7 +51,7 @@ async function fetchAndDisplayProjects() {
         projectData.image
       ) {
         var projectElement = document.createElement("a");
-        projectElement.href = `/project/?id=${projectData.id}`;
+        projectElement.href = `/project/${projectData.id}/`;
         projectElement.className = "project";
         projectElement.innerHTML = `
                 <img src="${projectData.image}" alt="${projectData.name}" />

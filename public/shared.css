@@ -159,8 +159,8 @@
       width: fit-content;
       border-radius: 1000px;
       overflow-x: auto;
-      -webkit-backdrop-filter: blur(var(--background-blur));
-      backdrop-filter: blur(var(--background-blur));
+      -webkit-backdrop-filter: blur(var(--background-blur)) saturate(1.5);
+      backdrop-filter: blur(var(--background-blur)) saturate(1.5);
       margin: 10px;
       max-width: calc(100% - var(--margin) * 2);
       display: flex;
