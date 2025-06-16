@@ -24,6 +24,7 @@
       --color-text: #ffffff;
       --color-text-low-contrast: gray;
       --color-accent: #eb99ff;
+      --color-accent-highlighted: hsla(from var(--color-accent) h s 85% / 1);
       --color-accent-translucent: hsla(from var(--color-accent) h s l / 0.1);
       --color-accent-gradient: hsla(from var(--color-accent) h s l / 0.2);
       --color-accent-container: color-mix(
@@ -44,6 +45,7 @@
       --color-text: #000000;
       --color-text-low-contrast: rgb(68, 68, 68);
       --color-accent: #c147df;
+      --color-accent-highlighted: hsla(from var(--color-accent) h s 25% / 1);
       --color-accent-translucent: hsla(from var(--color-accent) h s l / 0.1);
       --color-accent-gradient: hsla(from var(--color-accent) h s l / 0.2);
       --color-accent-container: color-mix(
@@ -102,13 +104,13 @@
     color: var(--color-accent);
     transition: all 0.1s ease-out;
     &:hover {
-      color: hsla(from var(--color-accent) h s 85% / 1);
+      color: var(--color-accent-highlighted);
     }
     .fa {
       color: var(--color-accent);
       transition: all 0.1s ease-out;
       &:hover {
-        color: hsla(from var(--color-accent) h s 85% / 1);
+        color: var(--color-accent-highlighted);
       }
     }
   }
