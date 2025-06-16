@@ -8,6 +8,7 @@ main {
   }
   #project-name {
     text-wrap: balance;
+    text-transform: capitalize;
     @media screen and (min-width: 1025px) {
       max-width: 60vw;
     }
@@ -41,7 +42,7 @@ main {
     object-fit: cover;
     -webkit-mask-image: linear-gradient(to top, transparent 0%, black 100%);
     mask-image: linear-gradient(to top, transparent 0%, black 100%);
-    filter: brightness(0.2);
+    filter: blur(10px) brightness(0.2);
     @media screen and (min-width: 1025px) {
       width: 100%;
       height: 20vw;
@@ -59,9 +60,11 @@ main {
   #project-date {
     color: gray;
   }
-  #project-tags {
+  #project-tags,
+  .tags-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: right;
     gap: 15px;
     padding-top: 15px;
     height: fit-content;

@@ -155,14 +155,16 @@
         bottom: 0;
         color: white;
         margin: 0;
-        height: 40%;
-        font-size: 5vw;
+        min-height: 40%;
+        height: fit-content;
+        font-size: 2em;
         padding: 5px;
+        padding-left: 20%;
         width: 100%;
         text-align: end;
         background: rgba(0, 0, 0, 80%);
         @media screen and (min-width: 600px) {
-          font-size: 2.3vw;
+          font-size: 1.8em;
         }
       }
     }
@@ -173,10 +175,10 @@ main {
   @media screen and (min-width: 600px) {
     background: linear-gradient(
         292.81deg,
-        rgba(0, 0, 0, 0) 22.73%,
-        rgba(235, 153, 255, 0.2) 100%
+        transparent 22.73%,
+        var(--color-accent-gradient) 100%
       ),
-      #1a1a1a;
+      var(--color-background);
   }
   @media (min-width: 1025px) {
     display: grid;

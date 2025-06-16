@@ -36,6 +36,11 @@ if (tagId) {
   selectedTag = tagId;
 } else {
   selectedTag = "all";
+  history.replaceState(
+    null,
+    "",
+    window.location.pathname + `?tagId=${selectedTag}`
+  );
 }
 let loadingIndicator = document.createElement("h2");
 loadingIndicator.textContent = "Loading projects...";
@@ -124,8 +129,12 @@ async function fetchAndDisplayProjects() {
   }
 }
 
-async function selectTag(tagId) {
+async function selectTag(tagId, pushState = true) {
   const tagElement = document.getElementById(`tag-${tagId}`);
+
+  if (pushState) {
+    history.pushState(null, "", window.location.pathname + `?tagId=${tagId}`);
+  }
 
   if (tagId === selectedTag) {
     selectedTag = "";
@@ -151,8 +160,10 @@ async function fetchAll() {
   await fetchAndDisplayProjects();
 }
 
-fetchAll().catch((error) => {
-  console.error("Error during initial fetch: ", error);
-  projectsContainer.innerHTML =
-    "<p>Could not load projects or tags. Please try again later.</p>";
-});
+fetchAll();
+
+window.onpopstate = function (event) {
+  const urlParams = new URLSearchParams(event.target.location.search);
+  const tagId = urlParams.get("tagId");
+  selectTag(tagId || "all", false);
+};

@@ -60,7 +60,7 @@ main {
   }
   #projects-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     column-gap: 20px;
     row-gap: 20px;
     grid-template-rows: auto;
@@ -92,15 +92,15 @@ main {
         color: white;
         margin: 0;
         height: fit-content;
-        padding-left: 10%;
         min-height: 40%;
         padding: 5px;
+        padding-left: 20%;
         font-size: 2em;
         width: 100%;
         text-align: end;
         background: rgba(0, 0, 0, 80%);
         @media screen and (min-width: 600px) {
-          font-size: 1.5em;
+          font-size: 1.8em;
         }
       }
     }
@@ -111,17 +111,17 @@ main {
   @media screen and (min-width: 600px) {
     background: linear-gradient(
         314.01deg,
-        rgba(235, 153, 255, 0) 61.84%,
-        rgba(235, 153, 255, 0.2) 98.81%
+        transparent 61.84%,
+        var(--color-accent-gradient) 98.81%
       ),
-      #1a1a1a;
+      var(--color-background);
   }
   @media screen and (min-width: 1024px) {
     background: linear-gradient(
         292.81deg,
-        rgba(0, 0, 0, 0) 22.73%,
-        rgba(235, 153, 255, 0.2) 100%
+        transparent 22.73%,
+        var(--color-accent-gradient) 100%
       ),
-      #1a1a1a;
+      var(--color-background);
   }
 }
