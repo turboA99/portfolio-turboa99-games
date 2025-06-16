@@ -30,6 +30,8 @@ if (!projectId) {
     .pop();
 }
 
+console.log("Project ID:", projectId);
+
 if (projectId) {
   const docRef = doc(db, "projects", projectId);
   const docSnapshot = await getDoc(docRef);
