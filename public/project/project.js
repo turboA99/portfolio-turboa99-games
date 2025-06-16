@@ -21,7 +21,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const urlParams = new URLSearchParams(window.location.search);
-const projectId = urlParams.get("id");
+let projectId = urlParams.get("id");
 
 if (!projectId) {
   projectId = location.href
