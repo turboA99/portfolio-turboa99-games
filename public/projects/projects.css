@@ -30,7 +30,14 @@ main {
     &::-webkit-scrollbar {
       display: none;
     }
-    .tag {
+    :first-child {
+      margin-left: var(--inline-padding);
+    }
+    :last-child {
+      margin-right: var(--inline-padding);
+    }
+    .tag,
+    .tag-select {
       background-color: var(--color-surface);
       color: var(--color-text);
       padding: var(--button-padding);
@@ -42,11 +49,29 @@ main {
       font-weight: bold;
       letter-spacing: 1px;
       font-size: 1.1em;
-      &:first-of-type {
-        margin-left: var(--inline-padding);
+      outline: none;
+      border: none;
+      appearance: base-select;
+      &::picker(select) {
+        appearance: base-select;
+        border-radius: 0;
+        border-radius: 24px;
+        background: var(--color-surface);
+        margin-top: 0.5rem;
+        border: none;
       }
-      &:last-of-type {
-        margin-right: var(--inline-padding);
+      option {
+        margin: 0;
+        width: 100%;
+        border-radius: 0;
+        &::checkmark {
+          display: none;
+        }
+        &:hover,
+        &:focus {
+          background: var(--color-accent);
+          color: var(--color-on-accent);
+        }
       }
       &[selected] {
         background-color: var(--color-accent-translucent);
