@@ -188,6 +188,7 @@ async function selectTag(tagId, tagCategoryId = "", pushState = true) {
       document
         .getElementById(`tag-select-${selectedCategory}`)
         .toggleAttribute("selected", false);
+      document.getElementById(`tag-${selectedCategory}`).selected = true;
       selectedCategory = "";
     }
   } else {
