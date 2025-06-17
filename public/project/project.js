@@ -106,7 +106,10 @@ if (projectId) {
     tagElement.textContent = tag.data().name;
     const searchParams = new URLSearchParams();
     searchParams.set("tagId", tagId);
-    tagElement.href = `/projects/?${searchParams.toString()}`;
+    tagElement.href = `/projects/?${searchParams
+      .toString()
+      .split("/".filter((str) => str))
+      .pop()}`;
     tagElement.className = "tag";
     document.getElementById("project-tags").appendChild(tagElement);
   });
