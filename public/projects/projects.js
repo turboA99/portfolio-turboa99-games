@@ -94,7 +94,7 @@ async function fetchAndDisplayTags() {
         }
         subDagsDocs.forEach((subTag) => {
           var subTagData = subTag.data();
-          subTagData.id = subTag.id;
+          subTagData.id = `${tagData.id}/tags/${subTag.id}`;
 
           var subTagElement = document.createElement("option");
           subTagElement.onclick = () => selectTag(subTagData.id, tagData.id);
@@ -166,9 +166,15 @@ async function fetchAndDisplayProjects() {
 
 async function selectTag(tagId, tagCategoryId = "", pushState = true) {
   const tagElement = document.getElementById(`tag-${tagId}`);
+  const searchParams = new URLSearchParams();
+  searchParams.set("tagId", tagId);
 
   if (pushState) {
-    history.pushState(null, "", window.location.pathname + `?tagId=${tagId}`);
+    history.pushState(
+      null,
+      "",
+      window.location.pathname + `?${searchParams.toString()}`
+    );
   }
 
   if (tagId === selectedTag) {
