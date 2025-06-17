@@ -30,6 +30,7 @@ const tagsCollection = collection(db, "tags");
 const tagsContainer = document.getElementById("tags-container");
 
 var selectedTag = "";
+var selectedCategory = "";
 const urlParams = new URLSearchParams(window.location.search);
 const tagId = urlParams.get("tagId");
 if (tagId) {
@@ -49,10 +50,7 @@ projectsContainer.appendChild(loadingIndicator);
 
 async function fetchAndDisplayTags() {
   try {
-    const tagsDocs = await getDocs(
-      tagsCollection,
-      where("enabled", "==", true)
-    );
+    const tagsDocs = await getDocs(tagsCollection);
     {
       var tagElement = document.createElement("a");
       tagElement.onclick = () => selectTag("all");
@@ -64,19 +62,55 @@ async function fetchAndDisplayTags() {
       }
       tagsContainer.appendChild(tagElement);
     }
-    tagsDocs.forEach((tag) => {
+    tagsDocs.forEach(async (tag) => {
       var tagData = tag.data();
       tagData.id = tag.id;
 
-      var tagElement = document.createElement("a");
-      tagElement.onclick = () => selectTag(tagData.id);
-      tagElement.className = "tag";
-      tagElement.textContent = tagData.name;
-      tagElement.id = `tag-${tagData.id}`;
-      if (selectedTag === tagData.id) {
-        tagElement.toggleAttribute("selected", true);
+      if (!tagData.isCollection) {
+        var tagElement = document.createElement("a");
+        tagElement.onclick = () => selectTag(tagData.id);
+        tagElement.className = "tag";
+        tagElement.textContent = tagData.name;
+        tagElement.id = `tag-${tagData.id}`;
+        if (selectedTag === tagData.id) {
+          tagElement.toggleAttribute("selected", true);
+        }
+        tagsContainer.appendChild(tagElement);
+      } else {
+        const subTagCollection = collection(db, "tags", tagData.id, "tags");
+        const subDagsDocs = await getDocs(subTagCollection);
+        var subTagSelect = document.createElement("select");
+        subTagSelect.className = "tag-select";
+        subTagSelect.id = `tag-select-${tagData.id}`;
+        {
+          var subTagElement = document.createElement("option");
+          subTagElement.className = "tag";
+          subTagElement.textContent = tagData.name;
+          subTagElement.value = "";
+          subTagElement.onclick = () => selectTag("all");
+          subTagElement.id = `tag-${tagData.id}`;
+          subTagElement.selected = true;
+          subTagSelect.appendChild(subTagElement);
+        }
+        subDagsDocs.forEach((subTag) => {
+          var subTagData = subTag.data();
+          subTagData.id = `${tagData.id}/tags/${subTag.id}`;
+
+          var subTagElement = document.createElement("option");
+          subTagElement.onclick = () => selectTag(subTagData.id, tagData.id);
+          subTagElement.className = "tag";
+          subTagElement.textContent = subTagData.name;
+          subTagElement.id = `tag-${subTagData.id}`;
+          if (selectedTag === subTagData.id) {
+            subTagElement.selected = true;
+            subTagSelect.toggleAttribute("selected", true);
+            selectedCategory = tagData.id;
+          }
+          subTagElement.value = subTagData.id;
+          subTagSelect.appendChild(subTagElement);
+        });
+        tagsContainer.appendChild(subTagSelect);
       }
-      tagsContainer.appendChild(tagElement);
     });
   } catch (error) {
     console.error("Error fetching tags: ", error);
@@ -90,6 +124,7 @@ async function fetchAndDisplayProjects() {
   if (selectedTag && selectedTag !== "all") {
     q = query(q, where("tags", "array-contains", selectedTag));
   }
+  console.log("Fetching projects with query:", q);
 
   try {
     const projectDocs = await getDocs(q);
@@ -129,25 +164,51 @@ async function fetchAndDisplayProjects() {
   }
 }
 
-async function selectTag(tagId, pushState = true) {
+async function selectTag(tagId, tagCategoryId = "", pushState = true) {
   const tagElement = document.getElementById(`tag-${tagId}`);
+  const searchParams = new URLSearchParams();
+  searchParams.set("tagId", tagId);
 
   if (pushState) {
-    history.pushState(null, "", window.location.pathname + `?tagId=${tagId}`);
+    history.pushState(
+      null,
+      "",
+      window.location.pathname + `?${searchParams.toString()}`
+    );
   }
 
   if (tagId === selectedTag) {
+    tagElement.toggleAttribute("selected", false);
     selectedTag = "all";
     document.getElementById(`tag-all`).toggleAttribute("selected", true);
     if (pushState) {
       history.pushState(null, "", window.location.pathname + `?tagId=all`);
     }
-    tagElement.toggleAttribute("selected", false);
+    if (selectedCategory) {
+      document
+        .getElementById(`tag-select-${selectedCategory}`)
+        .toggleAttribute("selected", false);
+      document.getElementById(`tag-${selectedCategory}`).selected = true;
+      selectedCategory = "";
+    }
   } else {
     document
       .getElementById(`tag-${selectedTag}`)
       ?.toggleAttribute("selected", false);
+    if (selectedCategory && selectedCategory !== tagCategoryId) {
+      document.getElementById(`tag-${selectedCategory}`).selected = true;
+      document
+        .getElementById(`tag-select-${selectedCategory}`)
+        .toggleAttribute("selected", false);
+    }
     selectedTag = tagId;
+    selectedCategory = tagCategoryId;
+
+    if (selectedCategory) {
+      document
+        .getElementById(`tag-select-${selectedCategory}`)
+        .toggleAttribute("selected", true);
+    }
     tagElement.toggleAttribute("selected", true);
   }
 
