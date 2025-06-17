@@ -124,6 +124,7 @@ async function fetchAndDisplayProjects() {
   if (selectedTag && selectedTag !== "all") {
     q = query(q, where("tags", "array-contains", selectedTag));
   }
+  console.log("Fetching projects with query:", q);
 
   try {
     const projectDocs = await getDocs(q);
@@ -171,7 +172,18 @@ async function selectTag(tagId, tagCategoryId = "", pushState = true) {
   }
 
   if (tagId === selectedTag) {
-    selectTag("all", "", pushState);
+    tagElement.toggleAttribute("selected", false);
+    selectedTag = "all";
+    document.getElementById(`tag-all`).toggleAttribute("selected", true);
+    if (pushState) {
+      history.pushState(null, "", window.location.pathname + `?tagId=all`);
+    }
+    if (selectedCategory) {
+      document
+        .getElementById(`tag-select-${selectedCategory}`)
+        .toggleAttribute("selected", false);
+      selectedCategory = "";
+    }
   } else {
     document
       .getElementById(`tag-${selectedTag}`)
