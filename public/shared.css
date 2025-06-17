@@ -59,7 +59,7 @@
     }
     --background-blur: 15px;
     --medium-rounding: 15px;
-    --footer-height: 50px;
+    --footer-height: calc(68.8px + env(safe-area-inset-bottom, 0px));
     --nav-height: 77.2px;
     --inline-padding: 30px;
     --button-padding: 10px 20px;
