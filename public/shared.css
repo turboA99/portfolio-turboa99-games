@@ -15,6 +15,19 @@
   }
 
   :root {
+    interpolate-size: allow-keywords;
+
+    --background-blur: 15px;
+    --medium-rounding: 15px;
+    --footer-height: calc(68.8px + env(safe-area-inset-bottom, 0px));
+    --nav-height: 77.2px;
+    --inline-padding: 30px;
+    --button-padding: 10px 20px;
+    --hover-transition-duration: 100ms;
+    --hover-transition-easing: ease-out;
+    --spatial-small-transition-duration: 100ms;
+    --spatial-small-transition-easing: ease-out;
+
     @media (prefers-color-scheme: dark) {
       --color-background: hsla(0, 0%, 10%, 1);
       --color-background-variant: #0d0d0d;
@@ -57,12 +70,6 @@
       --color-divider: hsla(0, 0, 50%, 0.4);
       --color-surface: #c8c8c8;
     }
-    --background-blur: 15px;
-    --medium-rounding: 15px;
-    --footer-height: calc(68.8px + env(safe-area-inset-bottom, 0px));
-    --nav-height: 77.2px;
-    --inline-padding: 30px;
-    --button-padding: 10px 20px;
   }
 
   @keyframes fade-out {
@@ -102,13 +109,13 @@
   a {
     text-decoration: none;
     color: var(--color-accent);
-    transition: all 0.1s ease-out;
+    transition: all var(--hover-transition-duration) var(--hover-transition-easing);
     &:hover {
       color: var(--color-accent-highlighted);
     }
     .fa {
       color: var(--color-accent);
-      transition: all 0.1s ease-out;
+      transition: all var(--hover-transition-duration) var(--hover-transition-easing);
       &:hover {
         color: var(--color-accent-highlighted);
       }
@@ -177,6 +184,21 @@
         padding: 0.5rem 1rem;
         border-radius: 1000px;
         position: relative;
+        &::after {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          inset: 0;
+          border-radius: 1000px;
+          background-color: transparent;
+          pointer-events: none;
+          transition: background-color var(--hover-transition-duration) var(--hover-transition-easing);
+          opacity: .5;
+        }
+        &:not([active]):hover::after {
+          background-color: var(--color-accent-translucent);
+        }
         &[active]::before {
           content: "";
           position: absolute;
@@ -227,7 +249,7 @@
       color: var(--color-text);
       font-size: 1.2em;
       margin-left: 10px;
-      transition: all 0.1s ease-out;
+      transition: all var(--hover-transition-duration) var(--hover-transition-easing);
       i {
         color: var(--color-text);
       }

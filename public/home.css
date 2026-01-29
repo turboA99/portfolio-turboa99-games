@@ -59,7 +59,7 @@
       text-transform: uppercase;
       transform: scale(1);
       display: inline-block;
-      transition: all 0.1s ease-out;
+      transition: all var(--hover-transition-duration) var(--hover-transition-easing);
       &:hover {
         background-color: var(--color-accent-highlighted);
         transform: scale(1.05);
@@ -117,6 +117,11 @@
       width: 100%;
       height: auto;
       aspect-ratio: 4 / 3;
+      transform: scale(1);
+      transition: transform var(--hover-transition-duration) var(--hover-transition-easing);
+      &:hover {
+        transform: scale(1.02);
+      }
       @media screen and (min-width: 600px) and (max-width: 1024px) {
         &:nth-child(1) {
           grid-column: 1 / 3;
