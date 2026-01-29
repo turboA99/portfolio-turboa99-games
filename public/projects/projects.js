@@ -159,6 +159,9 @@ async function fetchAndDisplayProjects() {
 				projectElement.innerHTML = `
                         <img src="${projectData.image}" alt="${projectData.name}" />
                         <h3>${projectData.name}</h3>`;
+				projectElement.addEventListener("click", () => {
+					projectElement.style.viewTransitionName = "project";
+				});
 				projectsContainer.appendChild(projectElement);
 			} else {
 				console.warn("Skipping project with incomplete data:", projectData);

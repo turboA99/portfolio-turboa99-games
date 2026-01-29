@@ -114,7 +114,6 @@ main {
 			margin-inline: var(--inline-padding);
 		}
 		.project {
-			view-transition-name: project;
 			border-radius: var(--medium-rounding);
 			overflow: hidden;
 			width: 100%;
