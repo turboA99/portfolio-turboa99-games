@@ -23,15 +23,15 @@ const db = getFirestore(app);
 const urlParams = new URLSearchParams(window.location.search);
 let projectId = urlParams.get("id");
 
-document.querySelector("main").style.viewTransitionName =
-	"project-" + projectId;
-
 if (!projectId) {
 	projectId = location.href
 		.split("/")
 		.filter((str) => str)
 		.pop();
 }
+
+document.querySelector("main").style.viewTransitionName =
+	"project-" + projectId;
 
 if (projectId) {
 	const docRef = doc(db, "projects", projectId);
