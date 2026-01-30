@@ -118,8 +118,14 @@
 			height: auto;
 			aspect-ratio: 4 / 3;
 			transform: scale(1);
-			transition: transform var(--hover-transition-duration)
-				var(--hover-transition-easing);
+			transition:
+				transform var(--hover-transition-duration)
+					var(--hover-transition-easing),
+				opacity var(--hover-transition-duration) var(--hover-transition-easing);
+			@starting-style {
+				opacity: 0;
+				transform: scale(0.8);
+			}
 			&:hover {
 				transform: scale(1.02);
 			}
