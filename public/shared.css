@@ -91,6 +91,7 @@
 	}
 	html {
 		height: 100dvh;
+		scrollbar-gutter: stable;
 	}
 	body {
 		margin: 0;
