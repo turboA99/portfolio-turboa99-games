@@ -27,12 +27,7 @@ main {
 			rgba(0, 0, 0, 20%) calc(100% - var(--inline-padding) / 2),
 			transparent 100%
 		);
-		view-transition-name: tags-container;
-		::view-transition-new(tag),
-		::view-transition-old(tag) {
-			width: 100%;
-			height: 100%;
-		}
+		view-transition-class: tags-container;
 		&::-webkit-scrollbar {
 			display: none;
 		}
@@ -113,8 +108,8 @@ main {
 			position: absolute;
 			margin-inline: var(--inline-padding);
 		}
+
 		.project {
-			view-transition-name: project;
 			border-radius: var(--medium-rounding);
 			overflow: hidden;
 			width: 100%;
@@ -122,10 +117,19 @@ main {
 			aspect-ratio: 4 / 3;
 			transform: scale(1);
 			filter: brightness(100%);
-			transition: transform filter 100ms ease-out;
+			transition:
+				opacity 0.5s ease-out,
+				scale var(--hover-transition-duration) var(--hover-transition-easing),
+				filter var(--hover-transition-duration) var(--hover-transition-easing);
+			view-transition-class: project;
+
+			@starting-style {
+				scale: 0.8;
+				opacity: 0;
+			}
 
 			&:hover {
-				transform: scale(1.02);
+				scale: 1.02;
 				filter: brightness(110%);
 			}
 			img {

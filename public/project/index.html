@@ -1,51 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Project</title>
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="stylesheet" href="/shared.css" />
-    <link rel="stylesheet" href="/project/project.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-  </head>
-  <body>
-    <nav>
-      <ul>
-        <li>
-          <a href="/">Home</a>
-        </li>
-        <li>
-          <a href="/projects">Projects</a>
-        </li>
-      </ul>
-    </nav>
-    <main>
-      <img id="project-image" src="" alt="Project Image" />
-      <p id="project-name"></p>
-      <div class="date-tags">
-        <time id="project-date"></time>
-        <div id="project-tags"></div>
-      </div>
-      <div id="content"></div>
-    </main>
-    <footer>
-      <p>&copy; 2025 <img src="/logo.png" alt="turboA99" /> Games</p>
-      <div id="social-links">
-        <a title="Github link" href="https://github.com/turboA99"
-          ><i class="fa fa-github"></i
-        ></a>
-        <a title="LinkedIn link" href="https://www.linkedin.com/in/turboa99/"
-          ><i class="fa fa-linkedin"></i
-        ></a>
-        <a title="Mail link" href="mailto:turboRO99@gmail.com"
-          ><i class="fa fa-envelope"></i
-        ></a>
-      </div>
-    </footer>
-    <script type="module" src="/project/project.js"></script>
-  </body>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Project</title>
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="stylesheet" href="/shared.css" />
+		<link rel="stylesheet" href="/project/project.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+	</head>
+	<body>
+		<nav>
+			<ul>
+				<li>
+					<a href="/">Home</a>
+				</li>
+				<li>
+					<a href="/projects">Projects</a>
+				</li>
+			</ul>
+		</nav>
+		<main>
+			<img id="project-image" src="" alt="Project Image" />
+			<p id="project-name"></p>
+			<div class="date-tags">
+				<time id="project-date"></time>
+				<div id="project-tags"></div>
+			</div>
+			<div id="content"></div>
+		</main>
+		<footer>
+			<p>&copy; 2025 <img src="/logo.png" alt="turboA99" /> Games</p>
+			<div id="social-links">
+				<a title="Github link" href="https://github.com/turboA99"
+					><i class="fa fa-github"></i
+				></a>
+				<a title="LinkedIn link" href="https://www.linkedin.com/in/turboa99/"
+					><i class="fa fa-linkedin"></i
+				></a>
+				<a title="Mail link" href="mailto:turboRO99@gmail.com"
+					><i class="fa fa-envelope"></i
+				></a>
+			</div>
+		</footer>
+		<script type="module" src="/project/project.js"></script>
+		<script type="speculationrules">
+			{
+				"prerender": [
+					{
+						"source": "document",
+						"where": {
+							"and": [
+								{ "href_matches": ["/projects", "/"] },
+								{ "not": { "selector_matches": ".no-prerender" } }
+							]
+						},
+						"eagerness": "moderate"
+					}
+				]
+			}
+		</script>
+	</body>
 </html>
