@@ -59,6 +59,7 @@ async function fetchAndDisplayProjects() {
 				projectElement.addEventListener("click", () => {
 					projectElement.style.viewTransitionName = "project";
 				});
+				projectElement.style.viewTransitionName = "project-" + projectData.id;
 				projectsContainer.appendChild(projectElement);
 			} else {
 				console.warn("Skipping project with incomplete data:", projectData);

@@ -82,19 +82,6 @@ async function fetchAndDisplayTags() {
 				var subTagSelect = document.createElement("select");
 				subTagSelect.className = "tag-select";
 				subTagSelect.id = `tag-select-${tagData.id}`;
-				subTagSelect.addEventListener("change", (e) => {
-					if (!document.startViewTransition) {
-						// Fallback for older browsers
-						return;
-					}
-
-					subTagSelect.style.viewTransitionName = "tag";
-					const transition = document.startViewTransition();
-
-					transition.finished.finally(() => {
-						subTagSelect.style.viewTransitionName = "none";
-					});
-				});
 				{
 					var subTagElement = document.createElement("option");
 					subTagElement.className = "tag";
@@ -162,6 +149,7 @@ async function fetchAndDisplayProjects() {
 				projectElement.addEventListener("click", () => {
 					projectElement.style.viewTransitionName = "project";
 				});
+				projectElement.style.viewTransitionName = "project-" + projectData.id;
 				projectsContainer.appendChild(projectElement);
 			} else {
 				console.warn("Skipping project with incomplete data:", projectData);
