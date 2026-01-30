@@ -56,9 +56,6 @@ async function fetchAndDisplayProjects() {
 				projectElement.innerHTML = `
                 <img src="${projectData.image}" alt="${projectData.name}" />
                 <h3>${projectData.name}</h3>`;
-				projectElement.addEventListener("click", () => {
-					projectElement.style.viewTransitionName = "project";
-				});
 				projectElement.style.viewTransitionName = "project-" + projectData.id;
 				projectsContainer.appendChild(projectElement);
 			} else {
