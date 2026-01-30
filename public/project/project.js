@@ -30,7 +30,7 @@ if (!projectId) {
 		.pop();
 }
 
-document.querySelector("main").style.viewTransitionName =
+document.querySelector("#project-image").style.viewTransitionName =
 	"project-" + projectId;
 
 if (projectId) {
