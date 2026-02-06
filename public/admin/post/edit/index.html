@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Administration</title>
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="stylesheet" href="./edit.css" />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=article,edit,format_h2,image,short_text,video_library"
+		/>
+	</head>
+	<body state="Project Selection">
+		<nav>
+			<a href="/">Home</a>
+			<a href="/projects">Projects</a>
+		</nav>
+		<form id="floating-modal" autocomplete="off">
+			<span class="drag-handle"></span>
+			<h1>Edit Post</h1>
+			<div>
+				<label for="project-image-input">Project Image Link: </label>
+				<input
+					type="url"
+					id="project-image-input"
+					placeholder="https://image.com"
+					minlength="1"
+					required
+				/>
+			</div>
+			<div>
+				<label for="is-highlighted">Put in highlights?</label>
+				<input type="checkbox" name="highlighted" id="is-highlighted" />
+			</div>
+			<button id="post-edits" type="submit" variant="primary">
+				Post Edits
+			</button>
+		</form>
+		<main>
+			<div id="projects-container">
+				<span class="project skeleton"></span>
+				<span class="project skeleton"></span>
+				<span class="project skeleton"></span>
+				<span class="project skeleton"></span>
+				<span class="project skeleton"></span>
+				<span class="project skeleton"></span>
+				<span class="project skeleton"></span>
+				<span class="project skeleton"></span>
+				<span class="project skeleton"></span>
+				<span class="project skeleton"></span>
+			</div>
+			<div id="project-container">
+				<img id="project-image" src="" alt="Project Image" />
+				<div id="project-name">
+					<h1 id="project-name-header" contenteditable="true" plaintext-only>
+						Project Name
+					</h1>
+					<a target="_blank" id="github-link"
+						><i class="fa fa-github" aria-hidden="true"></i
+					></a>
+					<p
+						popover
+						id="github-link-popover"
+						contenteditable="true"
+						data-placeholder="Link to the project's GitHub repository"
+					>
+						Link to the project's GitHub repository
+					</p>
+					<a target="_blank" id="download-link"
+						><i class="fa fa-download" aria-hidden="true"></i
+					></a>
+					<p
+						popover
+						id="download-link-popover"
+						contenteditable="true"
+						data-placeholder="Link to the project's download page"
+					>
+						Link to the project's download page
+					</p>
+					<a target="_blank" id="project-link"
+						><i class="fa fa-globe" aria-hidden="true"></i
+					></a>
+					<p
+						popover
+						id="project-link-popover"
+						contenteditable="true"
+						data-placeholder="Link to the project's website"
+					>
+						Link to the project's website
+					</p>
+				</div>
+				<div class="date-tags">
+					<time id="project-date"></time>
+					<div id="tags-container"></div>
+				</div>
+				<div id="editor-container">
+					<menu id="toolbar">
+						<li>
+							<button onclick="document.insertSection()" title="Create Section">
+								<span class="material-symbols-outlined"> article </span>
+							</button>
+						</li>
+						<li>
+							<button onclick="document.insertHeader()" title="Create Heading">
+								<span class="material-symbols-outlined"> format_h2 </span>
+							</button>
+						</li>
+						<li>
+							<button
+								onclick="document.insertParagraph()"
+								title="Create Paragraph"
+							>
+								<span class="material-symbols-outlined"> short_text </span>
+							</button>
+						</li>
+						<li>
+							<button
+								onclick="document.insertYoutubeVideo()"
+								title="Insert Video"
+							>
+								<span class="material-symbols-outlined"> video_library </span>
+							</button>
+						</li>
+						<li>
+							<button onclick="document.insertImage()" title="Insert Image">
+								<span class="material-symbols-outlined"> image </span>
+							</button>
+						</li>
+					</menu>
+					<div id="content"></div>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<p>&copy; 2025 <img src="/logo.png" alt="turboA99" /> Games</p>
+			<div id="social-links">
+				<a title="Github link" href="https://github.com/turboA99"
+					><i class="fa fa-github"></i
+				></a>
+				<a title="LinkedIn link" href="https://www.linkedin.com/in/turboa99/"
+					><i class="fa fa-linkedin"></i
+				></a>
+				<a title="Mail link" href="mailto:turboRO99@gmail.com"
+					><i class="fa fa-envelope"></i
+				></a>
+			</div>
+		</footer>
+		<script type="module" src="/auth.js"></script>
+		<script type="module" src="/floating-modal.js"></script>
+		<script type="module" src="/admin/post/content-edit.js"></script>
+		<script type="module" src="./edit.js"></script>
+	</body>
+</html>

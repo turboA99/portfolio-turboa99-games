@@ -1,0 +1,22 @@
+@import "/shared.css";
+
+main {
+	display: flex;
+	flex-direction: column;
+	padding-inline: var(--inline-padding);
+}
+
+#admin-container {
+	display: grid;
+	height: stretch;
+	flex-grow: 1;
+	gap: 2rem;
+	@media screen and (orientation: landscape) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	button {
+		font-size: xxx-large;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+}

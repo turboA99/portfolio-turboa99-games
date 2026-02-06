@@ -97,11 +97,6 @@ if (projectId) {
 	);
 	document.getElementById("content").innerHTML = docSnapshot.data().content;
 
-	var obj = {
-		something: "hello",
-		another: "world",
-	};
-
 	docSnapshot.data().tags.forEach(async (tagId) => {
 		const tag = await getDoc(doc(db, "tags", tagId));
 		if (!tag) return;

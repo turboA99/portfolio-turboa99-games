@@ -1,10 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
 @view-transition {
 	navigation: auto;
 }
 
-@layer default, navigation, footer;
+@layer default, skeleton, navigation, footer;
 
 @layer default {
 	* {
@@ -13,16 +14,29 @@
 		position: relative;
 		color: var(--color-text);
 	}
-
+	@property --nav-height {
+		syntax: "<length-percentage>";
+		inherits: true;
+		initial-value: 0px;
+	}
+	@property --footer-height {
+		syntax: "<length-percentage>";
+		inherits: true;
+		initial-value: 0px;
+	}
 	:root {
 		interpolate-size: allow-keywords;
 
 		--background-blur: 15px;
+		--small-rounding: 7px;
 		--medium-rounding: 15px;
+		--large-rounding: 30px;
 		--footer-height: calc(68.8px + env(safe-area-inset-bottom, 0px));
 		--nav-height: 77.2px;
+		--min-content-height: calc(100dvh - var(--footer-height));
 		--inline-padding: 30px;
 		--button-padding: 10px 20px;
+		--panel-padding: 2rem 2rem;
 		--hover-transition-duration: 100ms;
 		--hover-transition-easing: ease-out;
 		--spatial-small-transition-duration: 100ms;
@@ -38,6 +52,9 @@
 			--color-text-low-contrast: gray;
 			--color-accent: #eb99ff;
 			--color-accent-highlighted: hsla(from var(--color-accent) h s 85% / 1);
+			--color-accent-highlighted-bright: hsla(
+				from var(--color-accent) h s 90% / 1
+			);
 			--color-accent-translucent: hsla(from var(--color-accent) h s l / 0.1);
 			--color-accent-gradient: hsla(from var(--color-accent) h s l / 0.2);
 			--color-accent-container: color-mix(
@@ -48,6 +65,14 @@
 			--color-on-accent: #000000;
 			--color-divider: hsla(0, 0, 50%, 0.4);
 			--color-surface: #333333;
+			--color-surface-highlighted: hsl(
+				from var(--color-surface) h s calc(l + 10)
+			);
+			--color-danger: #ff6666;
+			--color-on-danger: #000000;
+			--color-danger-highlighted: hsl(
+				from var(--color-danger) h s calc(l + 10)
+			);
 		}
 		@media (prefers-color-scheme: light) {
 			--color-background: hsla(0, 0%, 90%, 1);
@@ -59,6 +84,9 @@
 			--color-text-low-contrast: rgb(68, 68, 68);
 			--color-accent: #c147df;
 			--color-accent-highlighted: hsla(from var(--color-accent) h s 25% / 1);
+			--color-accent-highlighted-bright: hsla(
+				from var(--color-accent) h s 15% / 1
+			);
 			--color-accent-translucent: hsla(from var(--color-accent) h s l / 0.1);
 			--color-accent-gradient: hsla(from var(--color-accent) h s l / 0.2);
 			--color-accent-container: color-mix(
@@ -69,6 +97,14 @@
 			--color-on-accent: white;
 			--color-divider: hsla(0, 0, 50%, 0.4);
 			--color-surface: #c8c8c8;
+			--color-surface-highlighted: hsl(
+				from var(--color-surface) h s calc(l + 10)
+			);
+			--color-danger: #d93025;
+			--color-on-danger: #ffffff;
+			--color-danger-highlighted: hsl(
+				from var(--color-danger) h s calc(l + 10)
+			);
 		}
 	}
 
@@ -99,9 +135,6 @@
 		width: 100%;
 		top: 0;
 	}
-	main {
-		height: 100dvh;
-	}
 
 	ul {
 		padding: 0;
@@ -124,6 +157,38 @@
 			}
 		}
 	}
+	button {
+		background-color: var(--color-surface);
+		color: var(--color-text);
+		border: none;
+		border-radius: var(--medium-rounding);
+		padding: var(--button-padding);
+		font-size: 1em;
+		cursor: pointer;
+		transition: all var(--hover-transition-duration)
+			var(--hover-transition-easing);
+		& > * {
+			vertical-align: middle;
+		}
+		&:hover {
+			background-color: var(--color-surface-highlighted);
+		}
+		&[variant="primary"] {
+			background-color: var(--color-accent);
+			color: var(--color-on-accent);
+			&:hover {
+				background-color: var(--color-accent-highlighted);
+			}
+		}
+		&[variant="danger"] {
+			background-color: var(--color-danger);
+			color: var(--color-on-danger);
+			font-weight: bold;
+			&:hover {
+				background-color: var(--color-danger-highlighted);
+			}
+		}
+	}
 	p {
 		font-size: 1.3em;
 		@media (min-width: 600px) {
@@ -135,9 +200,71 @@
 	}
 	main {
 		padding-top: var(--nav-height);
-		min-height: calc(100dvh - var(--footer-height));
+		min-height: var(--min-content-height);
 		padding-bottom: 2rem;
 		height: auto;
+	}
+	#floating-modal {
+		background-color: var(--color-surface);
+		width: fit-content;
+		padding: var(--panel-padding);
+		border-radius: var(--large-rounding);
+		position: fixed;
+		z-index: 5;
+		margin: 1rem;
+		left: auto;
+		top: auto;
+		bottom: var(--footer-height);
+		right: 0;
+		transition: inset 0.3s ease-in-out;
+		.drag-handle {
+			display: block;
+			width: 3em;
+			height: 0.5rem;
+			border-radius: 1000px;
+			background-color: var(--color-text);
+			align-self: center;
+			cursor: pointer;
+		}
+	}
+	input[type="text"],
+	input[type="url"] {
+		background: var(--color-surface-highlighted);
+		border: 2px solid var(--color-accent);
+		font-size: larger;
+		padding: var(--button-padding);
+		border-radius: var(--medium-rounding);
+		&:invalid {
+			border-color: var(--color-danger);
+		}
+		&:focus {
+			outline: none;
+			border-color: var(--color-accent-highlighted-bright);
+		}
+	}
+	input[type="checkbox"] {
+		background: var(--color-accent-translucent);
+		width: 1.5rem;
+		height: 1.5rem;
+		border-radius: var(--small-rounding);
+		appearance: none;
+
+		&:checked {
+			background: var(--color-accent);
+			&::after {
+				content: "✓";
+				position: absolute;
+				margin: auto;
+				font-size: 1.2rem;
+				width: stretch;
+				text-align: center;
+				font-weight: bold;
+				color: var(--color-on-accent);
+			}
+		}
+	}
+	label {
+		padding-right: 1rem;
 	}
 	::view-transition-group(navigation-selector) {
 		z-index: 1;
@@ -159,69 +286,92 @@
 	}
 }
 
+@layer skeleton {
+	@property --skeleton-progress {
+		syntax: "<length-percentage>";
+		initial-value: 0%;
+		inherits: true;
+	}
+	.skeleton {
+		--skeleton-progress: 0%;
+		--gradient-size: 75px;
+		background: linear-gradient(
+			75deg,
+			var(--color-background-translucent),
+			var(--color-background-translucent)
+				calc(var(--skeleton-progress) - var(--gradient-size)),
+			var(--color-background-variant) var(--skeleton-progress),
+			var(--color-background-translucent)
+				calc(var(--skeleton-progress) + var(--gradient-size)),
+			var(--color-background-translucent)
+		);
+		animation: 1s ease-in-out infinite progress;
+	}
+
+	@keyframes progress {
+		0% {
+			--skeleton-progress: calc(0% - var(--gradient-size));
+		}
+		100% {
+			--skeleton-progress: calc(100% + var(--gradient-size));
+		}
+	}
+}
+
 @layer navigation {
 	nav {
+		--margin: 10px;
 		position: fixed;
-		width: 100%;
-		height: var(--nav-height);
+		height: calc(var(--nav-height) - var(--margin) * 2);
+		margin: var(--margin);
 		z-index: 10;
 		top: 0;
-		pointer-events: none;
-		ul {
-			--margin: 10px;
-			background-color: var(--color-background-translucent);
-			width: fit-content;
+		right: 0;
+		background-color: var(--color-background-translucent);
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		gap: 1rem;
+		-webkit-backdrop-filter: blur(var(--background-blur)) saturate(1.5);
+		backdrop-filter: blur(var(--background-blur)) saturate(1.5);
+		border-radius: 1000px;
+		padding: 5px;
+		a {
+			padding: var(--button-padding);
+			font-size: x-large;
 			border-radius: 1000px;
-			overflow-x: auto;
-			-webkit-backdrop-filter: blur(var(--background-blur)) saturate(1.5);
-			backdrop-filter: blur(var(--background-blur)) saturate(1.5);
-			margin: 10px;
-			max-width: calc(100% - var(--margin) * 2);
-			display: flex;
-			gap: 20px;
-			margin-left: auto;
-			padding: 5px;
 			pointer-events: all;
-			li {
-				list-style: none;
-				padding: 0.5rem 1rem;
+			color: var(--color-text);
+			vertical-align: middle;
+			line-height: 1;
+			&::after {
+				content: "";
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				inset: 0;
 				border-radius: 1000px;
-				position: relative;
-				&::after {
-					content: "";
-					position: absolute;
-					width: 100%;
-					height: 100%;
-					inset: 0;
-					border-radius: 1000px;
-					background-color: transparent;
-					pointer-events: none;
-					transition: background-color var(--hover-transition-duration)
-						var(--hover-transition-easing);
-					opacity: 0.5;
-				}
-				&:not([active]):hover::after {
-					background-color: var(--color-accent-translucent);
-				}
-				&[active]::before {
-					content: "";
-					position: absolute;
-					width: 100%;
-					height: 100%;
-					inset: 0;
-					border-radius: 1000px;
-					background-color: var(--color-accent-translucent);
-					view-transition-name: navigation-selector;
-				}
-				a {
-					text-decoration: none;
-					color: var(--color-text);
-					font-size: 1.5rem;
-					transition: all 0.5s ease-out;
-				}
-				&[active] a {
-					color: var(--color-accent);
-				}
+				background-color: transparent;
+				pointer-events: none;
+				transition: background-color var(--hover-transition-duration)
+					var(--hover-transition-easing);
+				opacity: 0.5;
+			}
+			&:not([active]):hover::after {
+				background-color: var(--color-accent-translucent);
+			}
+			&[active]::before {
+				content: "";
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				inset: 0;
+				border-radius: 1000px;
+				background-color: var(--color-accent-translucent);
+				view-transition-name: navigation-selector;
+			}
+			&[active] {
+				color: var(--color-accent);
 			}
 		}
 	}
