@@ -1,42 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Administration</title>
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="stylesheet" href="/shared.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-  </head>
-  <body>
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/projects">Projects</a></li>
-      </ul>
-    </nav>
-    <main>
-      <h1>Administration</h1>
-      <div id="admin-container"></div>
-    </main>
-    <footer>
-      <p>&copy; 2025 <img src="/logo.png" alt="turboA99" /> Games</p>
-      <div id="social-links">
-        <a title="Github link" href="https://github.com/turboA99"
-          ><i class="fa fa-github"></i
-        ></a>
-        <a title="LinkedIn link" href="https://www.linkedin.com/in/turboa99/"
-          ><i class="fa fa-linkedin"></i
-        ></a>
-        <a title="Mail link" href="mailto:turboRO99@gmail.com"
-          ><i class="fa fa-envelope"></i
-        ></a>
-      </div>
-    </footer>
-    <script type="module" src="/auth.js"></script>
-    <script type="module" src="./admin.js"></script>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Administration</title>
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="stylesheet" href="./admin.css" />
+	</head>
+	<body>
+		<nav>
+			<a href="/">Home</a>
+			<a href="/projects">Projects</a>
+		</nav>
+		<main>
+			<h1>Administration</h1>
+			<div id="admin-container">
+				<button
+					variant="primary"
+					onclick="location.href = '/admin/post/create'"
+				>
+					Create Post
+				</button>
+				<button onclick="location.href = '/admin/post/edit'">Edit Post</button>
+				<button variant="danger" onclick="location.href = '/admin/post/delete'">
+					Delete Post
+				</button>
+			</div>
+		</main>
+		<footer>
+			<p>&copy; 2025 <img src="/logo.png" alt="turboA99" /> Games</p>
+			<div id="social-links">
+				<a title="Github link" href="https://github.com/turboA99"
+					><i class="fa fa-github"></i
+				></a>
+				<a title="LinkedIn link" href="https://www.linkedin.com/in/turboa99/"
+					><i class="fa fa-linkedin"></i
+				></a>
+				<a title="Mail link" href="mailto:turboRO99@gmail.com"
+					><i class="fa fa-envelope"></i
+				></a>
+			</div>
+		</footer>
+		<script type="module" src="/auth.js"></script>
+		<script type="module" src="./admin.js"></script>
+	</body>
 </html>

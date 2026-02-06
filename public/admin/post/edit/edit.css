@@ -1,0 +1,96 @@
+@import "/shared.css";
+@import "/projects/projects.css";
+@import "/admin/post/create/post-create.css";
+
+@layer default, projects, project, edit;
+@layer edit {
+	#project-name {
+		height: fit-content;
+		& a {
+			display: inline-block;
+			height: 2ch;
+			& i {
+				display: inline-block;
+				font-size: 1.2em;
+			}
+		}
+		& a::before {
+			display: inline-block;
+			width: 1ch;
+		}
+		& p[popover] {
+			position-area: end span-all;
+			background-color: var(--color-surface);
+			min-width: 10ch;
+			text-align: center;
+			text-transform: none;
+		}
+	}
+
+	button.project {
+		padding: 0;
+
+		&:hover {
+			span {
+				opacity: 1;
+			}
+		}
+
+		span {
+			position: absolute;
+			inset: 0;
+			background: var(--color-accent-translucent);
+			font-size: xxx-large !important;
+			display: flex !important;
+			align-items: center;
+			justify-content: center;
+			color: var(--color-on-accent);
+			z-index: 1;
+			opacity: 0;
+			transition: opacity var(--hover-transition-easing)
+				var(--hover-transition-duration);
+			&::before {
+				content: "";
+				position: absolute;
+				width: 5rem;
+				height: 5rem;
+				z-index: -1;
+				background: var(--color-accent);
+				border-radius: 1000px;
+			}
+		}
+	}
+
+	#tags-container {
+		mask-image: none;
+		--webkit-mask-image: none;
+		.tag[selected] {
+			background-color: var(--color-accent);
+			color: var(--color-on-accent);
+		}
+	}
+
+	body[state="Project Selection"] {
+		#floating-modal {
+			display: none;
+		}
+		#project-container {
+			display: none;
+		}
+	}
+
+	body[state="Project Editing"] {
+		main {
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+		#projects-container {
+			display: none;
+		}
+		#project-container {
+			padding-top: var(--nav-height);
+			min-height: var(--min-content-height);
+			padding-bottom: 2rem;
+		}
+	}
+}
