@@ -416,6 +416,6 @@ async function uploadEdits() {
 	console.log(data);
 
 	await updateDoc(currentProjectRef, data).then(() => {
-		location.href = `/project/${currentProjectData.id}`;
+		location.href = `/project/${currentProjectRef.id}`;
 	});
 }
