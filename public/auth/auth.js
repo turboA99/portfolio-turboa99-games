@@ -4,7 +4,7 @@ import {
 	signInWithPopup,
 } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
 
-import { auth } from "/backend";
+import { auth } from "/backend.js";
 
 const provider = new GoogleAuthProvider();
 provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
