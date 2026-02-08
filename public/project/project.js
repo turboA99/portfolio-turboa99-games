@@ -24,6 +24,7 @@ if (projectId) {
 	onSnapshot(doc(firestore, "projects", projectId), (docSnapshot) => {
 		var projectTitle = document.createElement("h1");
 		projectTitle.textContent = docSnapshot.data().name;
+		document.getElementById("project-name").innerHTML = "";
 		document.getElementById("project-name").appendChild(projectTitle);
 		document.title = docSnapshot.data().name + " - TurboA99";
 		if (docSnapshot.data().github) {
@@ -106,6 +107,7 @@ if (projectId) {
 				});
 			});
 
+		document.getElementById("project-tags").innerHTML = "";
 		docSnapshot.data().tags.forEach(async (tagId) => {
 			onSnapshot(doc(firestore, "tags", tagId), (tag) => {
 				if (!tag) return;
