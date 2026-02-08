@@ -32,7 +32,7 @@ if (location.pathname.split("/").filter((elm) => elm)[3]) {
 		.setAttribute("state", "Project Editing");
 	let docRef = doc(firestore, "projects", projectID);
 	onSnapshot(docRef, (project) => {
-		let projectData = project.data;
+		let projectData = project.data();
 		currentProjectData = projectData;
 		document
 			.querySelector("body[state]")
@@ -123,6 +123,45 @@ if (location.pathname.split("/").filter((elm) => elm)[3]) {
 				document.addContentEditableCallbacks(elm);
 			});
 	});
+} else {
+	onSnapshot(projectsQuery, (projectDocs) => {
+		let projectElements = [];
+		projectDocs.forEach((project) => {
+			let projectData = project.data();
+			projectData.id = project.id;
+
+			if (
+				projectData &&
+				projectData.id &&
+				projectData.name &&
+				projectData.image
+			) {
+				var projectElement = document.createElement("button");
+				projectElement.setAttribute("data-project-id", projectData.id);
+				projectElement.className = "project";
+				projectElement.innerHTML = `
+                        <img src="${projectData.image}" alt="${projectData.name}" />
+                        <h3>${projectData.name}</h3>
+                        <span class="material-symbols-outlined"> edit </span>`;
+				projectElement.style.viewTransitionName = "project-" + projectData.id;
+				projectElement.onclick = () => {
+					currentProjectRef = doc(firestore, "projects", project.id);
+					document.currentProjectRef = currentProjectRef;
+					selectProject(projectData.id);
+				};
+				projectElements.push(projectElement);
+			} else {
+				console.warn("Skipping project with incomplete data:", projectData);
+			}
+		});
+
+		projectsContainer.innerHTML = "";
+		projectElements.forEach((elm) => projectsContainer.appendChild(elm));
+
+		if (projectDocs.empty) {
+			projectsContainer.innerHTML = "<p>No projects found</p>";
+		}
+	});
 }
 
 function validateContentEditable(element) {
@@ -202,44 +241,6 @@ document
 			});
 		}
 	});
-onSnapshot(projectsQuery, (projectDocs) => {
-	let projectElements = [];
-	projectDocs.forEach((project) => {
-		let projectData = project.data();
-		projectData.id = project.id;
-
-		if (
-			projectData &&
-			projectData.id &&
-			projectData.name &&
-			projectData.image
-		) {
-			var projectElement = document.createElement("button");
-			projectElement.setAttribute("data-project-id", projectData.id);
-			projectElement.className = "project";
-			projectElement.innerHTML = `
-                        <img src="${projectData.image}" alt="${projectData.name}" />
-                        <h3>${projectData.name}</h3>
-                        <span class="material-symbols-outlined"> edit </span>`;
-			projectElement.style.viewTransitionName = "project-" + projectData.id;
-			projectElement.onclick = () => {
-				currentProjectRef = doc(firestore, "projects", project.id);
-				document.currentProjectRef = currentProjectRef;
-				selectProject(projectData.id);
-			};
-			projectElements.push(projectElement);
-		} else {
-			console.warn("Skipping project with incomplete data:", projectData);
-		}
-	});
-
-	projectsContainer.innerHTML = "";
-	projectElements.forEach((elm) => projectsContainer.appendChild(elm));
-
-	if (projectDocs.empty) {
-		projectsContainer.innerHTML = "<p>No projects found</p>";
-	}
-});
 
 onSnapshot(tagsCollection, (tagsDocs) => {
 	tagsDocs.forEach(async (tag) => {
