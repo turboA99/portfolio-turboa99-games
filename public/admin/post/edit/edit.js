@@ -80,7 +80,7 @@ if (location.pathname.split("/").filter((elm) => elm)[3]) {
 				hour: "2-digit",
 				minute: "2-digit",
 			});
-		const lastModified = new Date(Date.now() * 1000);
+		const lastModified = new Date(Date.now());
 		document.getElementById("project-last-modified").dateTime = date;
 		document.getElementById("project-last-modified").textContent =
 			`Last modified: ${lastModified.toLocaleDateString(
