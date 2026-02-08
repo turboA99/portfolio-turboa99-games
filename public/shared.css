@@ -32,7 +32,7 @@
 		--medium-rounding: 15px;
 		--large-rounding: 30px;
 		--footer-height: calc(68.8px + env(safe-area-inset-bottom, 0px));
-		--nav-height: 77.2px;
+		--nav-height: calc(77.2px + env(safe-area-inset-top, 30px));
 		--min-content-height: calc(100dvh - var(--footer-height));
 		--inline-padding: 30px;
 		--button-padding: 10px 20px;
@@ -335,8 +335,11 @@
 	nav {
 		--margin: 10px;
 		position: fixed;
-		height: calc(var(--nav-height) - var(--margin) * 2);
+		height: calc(
+			var(--nav-height) - var(--margin) * 2 - env(safe-area-inset-top, 0px)
+		);
 		margin: var(--margin);
+		margin-top: calc(var(--margin) + env(safe-area-inset-top, 0px));
 		z-index: 10;
 		top: 0;
 		right: 0;
