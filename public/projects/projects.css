@@ -15,6 +15,10 @@
 			margin-bottom: 15px;
 			position: relative;
 			width: 100%;
+			.skeleton {
+				min-width: 7rem;
+				height: 43px;
+			}
 			&[scroll] {
 				-webkit-mask-image: linear-gradient(
 					to right,

@@ -68,7 +68,7 @@
 				align-items: flex-end;
 			}
 		}
-		#project-date {
+		#project-last-modified {
 			color: var(--color-text-low-contrast);
 		}
 		#project-tags,

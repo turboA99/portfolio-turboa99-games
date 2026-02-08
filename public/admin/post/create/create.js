@@ -6,6 +6,7 @@ import {
 	setDoc,
 	doc,
 	serverTimestamp,
+	onSnapshot,
 } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -45,44 +46,37 @@ projectDate.textContent = now.toLocaleDateString(undefined, {
 	minute: "2-digit",
 });
 
-async function fetchAndDisplayTags() {
-	try {
-		const tagsDocs = await getDocs(tagsCollection);
-		tagsDocs.forEach(async (tag) => {
-			var tagData = tag.data();
-			tagData.id = tag.id;
+onSnapshot(tagsCollection, (tagsDocs) => {
+	tagsDocs.forEach(async (tag) => {
+		var tagData = tag.data();
+		tagData.id = tag.id;
 
-			if (!tagData.isCollection) {
+		if (!tagData.isCollection) {
+			var tagElement = document.createElement("button");
+			tagElement.onclick = () => selectTag(tagData.id);
+			tagElement.className = "tag";
+			tagElement.textContent = tagData.name;
+			tagElement.id = `tag-${tagData.id}`;
+			tagElement.setAttribute("data-tag-id", tagData.id);
+			tagsContainer.appendChild(tagElement);
+		} else {
+			const subTagCollection = collection(db, "tags", tagData.id, "tags");
+			const subTagsDocs = await getDocs(subTagCollection);
+			subTagsDocs.forEach((subTag) => {
+				var subTagData = subTag.data();
+				subTagData.id = `${tagData.id}/tags/${subTag.id}`;
+
 				var tagElement = document.createElement("button");
-				tagElement.onclick = () => selectTag(tagData.id);
+				tagElement.onclick = () => selectTag(subTagData.id);
 				tagElement.className = "tag";
-				tagElement.textContent = tagData.name;
-				tagElement.id = `tag-${tagData.id}`;
-				tagElement.setAttribute("data-tag-id", tagData.id);
+				tagElement.textContent = subTagData.name;
+				tagElement.id = `tag-${subTagData.id}`;
+				tagElement.setAttribute("data-tag-id", subTagData.id);
 				tagsContainer.appendChild(tagElement);
-			} else {
-				const subTagCollection = collection(db, "tags", tagData.id, "tags");
-				const subTagsDocs = await getDocs(subTagCollection);
-				subTagsDocs.forEach((subTag) => {
-					var subTagData = subTag.data();
-					subTagData.id = `${tagData.id}/tags/${subTag.id}`;
-
-					var tagElement = document.createElement("button");
-					tagElement.onclick = () => selectTag(subTagData.id);
-					tagElement.className = "tag";
-					tagElement.textContent = subTagData.name;
-					tagElement.id = `tag-${subTagData.id}`;
-					tagElement.setAttribute("data-tag-id", subTagData.id);
-					tagsContainer.appendChild(tagElement);
-				});
-			}
-		});
-	} catch (error) {
-		console.error("Error fetching tags: ", error);
-		tagsContainer.innerHTML =
-			"<p>Could not load tags. Please try again later.</p>";
-	}
-}
+			});
+		}
+	});
+});
 
 function selectTag(tagId) {
 	const tagElement = document.getElementById(`tag-${tagId}`);
@@ -118,19 +112,19 @@ projectName.querySelectorAll("a").forEach((link) => {
 		popoverElement.addEventListener("keydown", (ev) => {
 			if (ev.key === "Escape" || ev.key === "Enter") {
 				ev.preventDefault();
-				link.href = "#";
+				link.toggleAttribute("href", false);
 				validateURLOrPlaceholder(popoverElement, (url) => (link.href = url));
 				popoverElement.hidePopover();
 			}
 		});
 		popoverElement.addEventListener("toggle", (ev) => {
 			if (!popoverElement.open) {
-				link.href = "#";
+				link.toggleAttribute("href", false);
 				validateURLOrPlaceholder(popoverElement, (url) => (link.href = url));
 			}
 		});
 		popoverElement.addEventListener("change", (ev) => {
-			link.href = "#";
+			link.toggleAttribute("href", false);
 			validateURLOrPlaceholder(popoverElement, (url) => (link.href = url));
 		});
 	}
@@ -181,11 +175,9 @@ imageLink.addEventListener("change", (ev) => {
 
 document.insertSection();
 
-await fetchAndDisplayTags();
-
-// window.onbeforeunload = () => {
-// 	return "Are you sure you want to leave? Unsaved changes will be lost.";
-// };
+window.onbeforeunload = () => {
+	return "Are you sure you want to leave? Unsaved changes will be lost.";
+};
 
 floatingModal.addEventListener("submit", (ev) => {
 	if (!floatingModal.checkValidity()) {
@@ -245,7 +237,7 @@ async function postPage() {
 	const image = validateUrl(imageLink.value);
 	const highlight = document.getElementById("is-highlighted").checked;
 
-	clearContent();
+	document.clearContentForPosting(content);
 	const contentHtml = content.innerHTML;
 	if (
 		!projectId ||
@@ -280,16 +272,7 @@ async function postPage() {
 	if (downloadLink.href && downloadLink.href !== "#")
 		data.download = downloadLink.href;
 
-	const projectDocRef = await setDoc(projectDoc, data).then(() => {
+	await setDoc(projectDoc, data).then(() => {
 		location.href = `/project/${projectId}`;
 	});
 }
-
-function clearContent() {
-	content.querySelectorAll("[contenteditable]").forEach((elm) => {
-		elm.toggleAttribute("data-placeholder", false);
-		elm.toggleAttribute("contenteditable", false);
-	});
-}
-
-document.clearContent = clearContent;

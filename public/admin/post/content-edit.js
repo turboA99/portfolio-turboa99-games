@@ -1,4 +1,5 @@
 let lastSelectedSection = null;
+let lastSelectedEditable = null;
 
 function validateContentEditable(element) {
 	const placeholderText = element.getAttribute("data-placeholder");
@@ -9,6 +10,7 @@ function validateContentEditable(element) {
 }
 function validateURLOrPlaceholder(element, onSuccess = (url) => {}) {
 	validateContentEditable(element);
+	if (element.getAttribute("data-placeholder") === element.textContent) return;
 	try {
 		let url = validateUrl(element.textContent);
 		if (!url) throw new Error("Invalid URL");
@@ -53,6 +55,7 @@ function insertHeader() {
 	addEnterCallback(header);
 	lastSelectedSection.appendChild(header);
 }
+
 function insertParagraph() {
 	if (!lastSelectedSection) {
 		insertSection();
@@ -68,6 +71,22 @@ function insertParagraph() {
 	addEnterCallback(paragraph);
 	lastSelectedSection.appendChild(paragraph);
 	paragraph.focus();
+}
+
+function insertGithubLink() {
+	if (lastSelectedEditable) {
+		let href = window.prompt(
+			"Please insert the link to the github page",
+			"https://github.com/",
+		);
+		let url = validateUrl(href);
+		if (url) {
+			const githubLink = document.createElement("a");
+			githubLink.href = url;
+			githubLink.innerHTML = `<i class="fa fa-github" aria-hidden="true"></i>`;
+			lastSelectedEditable.appendChild(githubLink);
+		}
+	}
 }
 
 function insertImage() {
@@ -142,6 +161,7 @@ function addFocusCallback(element) {
 	element.addEventListener("focusin", (ev) => {
 		if (element.parentSection) {
 			lastSelectedSection = element.parentSection;
+			lastSelectedEditable = element;
 		}
 		if (element.textContent && element.hasAttribute("data-placeholder")) {
 			let placeholderText = element.getAttribute("data-placeholder");
@@ -155,17 +175,17 @@ function addFocusCallback(element) {
 	});
 }
 
-function addBackspaceCallback(element) {
+function addBackspaceCallback(element, elementToRemove = element) {
 	if (element.textContent) {
 		element.addEventListener("keydown", (ev) => {
 			if (ev.key === "Backspace") {
 				if (element.textContent === "") {
 					if (element.previousElementSibling) {
-						element.previousElementSibling.focus();
+						elementToRemove.previousElementSibling.focus();
 					} else {
-						element.parentSection.remove();
+						elementToRemove.parentSection.remove();
 					}
-					element.remove();
+					elementToRemove.remove();
 				}
 			}
 		});
@@ -199,11 +219,20 @@ function addEnterCallback(element) {
 	});
 }
 
+function clearContentForPosting(root) {
+	root.querySelectorAll("[contenteditable]").forEach((elm) => {
+		elm.toggleAttribute("data-placeholder", false);
+		elm.toggleAttribute("contenteditable", false);
+	});
+}
+
 document.insertSection = insertSection;
 document.insertParagraph = insertParagraph;
 document.insertHeader = insertHeader;
 document.insertImage = insertImage;
 document.insertYoutubeVideo = insertVideo;
+document.clearContentForPosting = clearContentForPosting;
+document.insertGithubLink = insertGithubLink;
 document.addContentEditableCallbacks = (element) => {
 	addFocusCallback(element);
 	addEnterCallback(element);

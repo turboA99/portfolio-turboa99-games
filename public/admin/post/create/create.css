@@ -39,13 +39,14 @@
 			display: inline-block;
 			width: 1ch;
 		}
-		& p[popover] {
-			position-area: end span-all;
-			background-color: var(--color-surface);
-			min-width: 10ch;
-			text-align: center;
-			text-transform: none;
-		}
+	}
+
+	p[popover] {
+		position-area: end span-all;
+		background-color: var(--color-surface);
+		min-width: 10ch;
+		text-align: center;
+		text-transform: none;
 	}
 
 	#tags-container {
@@ -71,10 +72,28 @@
 		& li {
 			list-style: none;
 		}
+		i {
+			font-size: 24px !important;
+		}
 	}
 
 	#editor-container {
 		grid-column: span 2;
+		.header-with-github-link {
+			h2 {
+				display: inline;
+			}
+			a:not([href]) {
+				opacity: 0.5;
+			}
+			a::before {
+				content: " ";
+			}
+			i {
+				font-size: xx-large !important;
+				margin-block-end: 0.83em;
+			}
+		}
 	}
 
 	#floating-modal {

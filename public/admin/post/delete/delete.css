@@ -1,1 +1,25 @@
 @import "/shared.css";
+@import "/projects/projects.css";
+
+@layer projects, delete;
+
+@layer delete {
+	.project {
+		padding: 0;
+		span {
+			position: absolute;
+			inset: 0;
+			background-color: var(--color-danger);
+			display: flex !important;
+			justify-content: center;
+			align-items: center;
+			font-size: xxx-large !important;
+			opacity: 0;
+			transition: opacity var(--hover-transition-duration)
+				var(--hover-transition-easing);
+		}
+		&:hover span {
+			opacity: 1;
+		}
+	}
+}
