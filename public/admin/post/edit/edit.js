@@ -22,6 +22,55 @@ let currentProjectRef;
 let currentProjectData;
 let projectID = null;
 
+onSnapshot(tagsCollection, (tagsDocs) => {
+	tagsDocs.forEach(async (tag) => {
+		var tagData = tag.data();
+		tagData.id = tag.id;
+
+		if (!tagData.isCollection) {
+			var tagElement = document.createElement("button");
+			tagElement.onclick = () => selectTag(tagElement);
+			tagElement.className = "tag";
+			tagElement.textContent = tagData.name;
+			tagElement.id = `tag-${tagData.id}`;
+			tagElement.setAttribute("data-tag-id", tagData.id);
+			if (
+				currentProjectData &&
+				currentProjectData.tags.find((tag) => tag === tagData.id)
+			) {
+				tagElement.toggleAttribute("selected", true);
+			}
+			tagsContainer.appendChild(tagElement);
+		} else {
+			const subTagCollection = collection(
+				firestore,
+				"tags",
+				tagData.id,
+				"tags",
+			);
+			const subTagsDocs = await getDocs(subTagCollection);
+			subTagsDocs.forEach((subTag) => {
+				var subTagData = subTag.data();
+				subTagData.id = `${tagData.id}/tags/${subTag.id}`;
+
+				var tagElement = document.createElement("button");
+				tagElement.onclick = () => selectTag(tagElement);
+				tagElement.className = "tag";
+				tagElement.textContent = subTagData.name;
+				tagElement.id = `tag-${subTagData.id}`;
+				tagElement.setAttribute("data-tag-id", subTagData.id);
+				if (
+					currentProjectData &&
+					currentProjectData.tags.find((tag) => tag === subTagData.id)
+				) {
+					tagElement.toggleAttribute("selected", true);
+				}
+				tagsContainer.appendChild(tagElement);
+			});
+		}
+	});
+});
+
 if (location.pathname.split("/").filter((elm) => elm)[3]) {
 	projectID = location.pathname.split("/").filter((elm) => elm)[3];
 	window.onbeforeunload = () => {
@@ -241,43 +290,6 @@ document
 			});
 		}
 	});
-
-onSnapshot(tagsCollection, (tagsDocs) => {
-	tagsDocs.forEach(async (tag) => {
-		var tagData = tag.data();
-		tagData.id = tag.id;
-
-		if (!tagData.isCollection) {
-			var tagElement = document.createElement("button");
-			tagElement.onclick = () => selectTag(tagElement);
-			tagElement.className = "tag";
-			tagElement.textContent = tagData.name;
-			tagElement.id = `tag-${tagData.id}`;
-			tagElement.setAttribute("data-tag-id", tagData.id);
-			tagsContainer.appendChild(tagElement);
-		} else {
-			const subTagCollection = collection(
-				firestore,
-				"tags",
-				tagData.id,
-				"tags",
-			);
-			const subTagsDocs = await getDocs(subTagCollection);
-			subTagsDocs.forEach((subTag) => {
-				var subTagData = subTag.data();
-				subTagData.id = `${tagData.id}/tags/${subTag.id}`;
-
-				var tagElement = document.createElement("button");
-				tagElement.onclick = () => selectTag(tagElement);
-				tagElement.className = "tag";
-				tagElement.textContent = subTagData.name;
-				tagElement.id = `tag-${subTagData.id}`;
-				tagElement.setAttribute("data-tag-id", subTagData.id);
-				tagsContainer.appendChild(tagElement);
-			});
-		}
-	});
-});
 
 function selectProject(projectID) {
 	if (!projectID)
