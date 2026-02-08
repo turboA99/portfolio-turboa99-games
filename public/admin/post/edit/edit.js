@@ -27,96 +27,102 @@ if (location.pathname.split("/").filter((elm) => elm)[3]) {
 	window.onbeforeunload = () => {
 		return "Are you sure you want to leave? Unsaved changes will be lost.";
 	};
-	currentProjectData = projectData;
 	document
 		.querySelector("body[state]")
 		.setAttribute("state", "Project Editing");
-	document.querySelectorAll(".tag").forEach((elm) => {
-		const tagId = elm.getAttribute("data-tag-id");
-		if (!tagId)
-			throw new Error("The tag must have data-tag-id attribute attached");
-		if (projectData.tags.find((id) => id == tagId)) {
-			elm.toggleAttribute("selected", true);
-		} else {
-			elm.toggleAttribute("selected", false);
+	let docRef = doc(firestore, "projects", projectID);
+	onSnapshot(docRef, (project) => {
+		let projectData = project.data();
+		currentProjectData = projectData;
+		document
+			.querySelector("body[state]")
+			.setAttribute("state", "Project Editing");
+		document.querySelectorAll(".tag").forEach((elm) => {
+			const tagId = elm.getAttribute("data-tag-id");
+			if (!tagId)
+				throw new Error("The tag must have data-tag-id attribute attached");
+			if (projectData.tags.find((id) => id == tagId)) {
+				elm.toggleAttribute("selected", true);
+			} else {
+				elm.toggleAttribute("selected", false);
+			}
+		});
+		document.getElementById("project-name-header").textContent =
+			projectData.name;
+		document.title = projectData.name + " - TurboA99";
+		if (projectData.github) {
+			document.getElementById("github-link").href = projectData.github;
+			document.getElementById("github-link-popover").textContent =
+				projectData.github;
 		}
-	});
-	document.getElementById("project-name-header").textContent = projectData.name;
-	document.title = projectData.name + " - TurboA99";
-	if (projectData.github) {
-		document.getElementById("github-link").href = projectData.github;
-		document.getElementById("github-link-popover").textContent =
-			projectData.github;
-	}
 
-	if (projectData.link) {
-		document.getElementById("project-link").href = projectData.link;
-		document.getElementById("project-link-popover").textContent =
-			projectData.link;
-	}
+		if (projectData.link) {
+			document.getElementById("project-link").href = projectData.link;
+			document.getElementById("project-link-popover").textContent =
+				projectData.link;
+		}
 
-	if (projectData.download) {
-		document.getElementById("download-link").href = projectData.download;
-		document.getElementById("download-link-popover").textContent =
-			projectData.download;
-	}
+		if (projectData.download) {
+			document.getElementById("download-link").href = projectData.download;
+			document.getElementById("download-link-popover").textContent =
+				projectData.download;
+		}
 
-	document.getElementById("project-image").src = projectData.image;
-	document.getElementById("project-image").alt = projectData.name;
-	const date = new Date(projectData.date.seconds * 1000);
-	document.getElementById("project-date").dateTime = date;
-	document.getElementById("project-date").textContent = date.toLocaleDateString(
-		date.getTimezoneOffset(),
-		{
-			year: "numeric",
-			month: "long",
-			day: "numeric",
-			hour: "2-digit",
-			minute: "2-digit",
-		},
-	);
-	const lastModified = new Date(Date.now() * 1000);
-	document.getElementById("project-last-modified").dateTime = date;
-	document.getElementById("project-last-modified").textContent =
-		`Last modified: ${lastModified.toLocaleDateString(
-			lastModified.getTimezoneOffset(),
-			{
+		document.getElementById("project-image").src = projectData.image;
+		document.getElementById("project-image").alt = projectData.name;
+		const date = new Date(projectData.date.seconds * 1000);
+		document.getElementById("project-date").dateTime = date;
+		document.getElementById("project-date").textContent =
+			date.toLocaleDateString(date.getTimezoneOffset(), {
 				year: "numeric",
 				month: "long",
 				day: "numeric",
 				hour: "2-digit",
 				minute: "2-digit",
-			},
-		)}`;
-	content.innerHTML = projectData.content;
-	document.getElementById("is-highlighted").checked = projectData.highlighted;
-	document.getElementById("project-image-input").value = projectData.image;
+			});
+		const lastModified = new Date(Date.now() * 1000);
+		document.getElementById("project-last-modified").dateTime = date;
+		document.getElementById("project-last-modified").textContent =
+			`Last modified: ${lastModified.toLocaleDateString(
+				lastModified.getTimezoneOffset(),
+				{
+					year: "numeric",
+					month: "long",
+					day: "numeric",
+					hour: "2-digit",
+					minute: "2-digit",
+				},
+			)}`;
+		content.innerHTML = projectData.content;
+		document.getElementById("is-highlighted").checked = projectData.highlighted;
+		document.getElementById("project-image-input").value = projectData.image;
 
-	tagsContainer.querySelectorAll(".tag").forEach((elm) => {
-		const tagId = elm.getAttribute("data-tag-id");
-		if (!tagId)
-			throw new Error("The tag must have data-tag-id attribute attached");
-		if (projectData.tags.find((id) => id == tagId)) {
-			elm.toggleAttribute("selected", true);
-		} else {
-			elm.toggleAttribute("selected", false);
-		}
-	});
-
-	document
-		.getElementById("content")
-		.querySelectorAll("section > *")
-		.forEach((elm) => {
-			elm.contentEditable = "true";
-			if (elm.tagName.toLocaleLowerCase() === "p") {
-				elm.setAttribute("data-placeholder", "Write a paragraph here...");
+		tagsContainer.querySelectorAll(".tag").forEach((elm) => {
+			const tagId = elm.getAttribute("data-tag-id");
+			if (!tagId)
+				throw new Error("The tag must have data-tag-id attribute attached");
+			if (projectData.tags.find((id) => id == tagId)) {
+				elm.toggleAttribute("selected", true);
+			} else {
+				elm.toggleAttribute("selected", false);
 			}
-			if (elm.tagName.toLocaleLowerCase() === "h2") {
-				elm.setAttribute("data-placeholder", "Edit header...");
-			}
-			elm.parentSection = elm.parentElement;
-			document.addContentEditableCallbacks(elm);
 		});
+
+		document
+			.getElementById("content")
+			.querySelectorAll("section > *")
+			.forEach((elm) => {
+				elm.contentEditable = "true";
+				if (elm.tagName.toLocaleLowerCase() === "p") {
+					elm.setAttribute("data-placeholder", "Write a paragraph here...");
+				}
+				if (elm.tagName.toLocaleLowerCase() === "h2") {
+					elm.setAttribute("data-placeholder", "Edit header...");
+				}
+				elm.parentSection = elm.parentElement;
+				document.addContentEditableCallbacks(elm);
+			});
+	});
 }
 
 function validateContentEditable(element) {
