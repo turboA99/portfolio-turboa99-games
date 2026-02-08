@@ -20,6 +20,7 @@ const projectsQuery = query(projectsCollection, orderBy("date", "desc"));
 
 let currentProjectRef;
 let currentProjectData;
+const searchParams = new URLSearchParams(location.search);
 let projectID = null;
 
 onSnapshot(tagsCollection, (tagsDocs) => {
@@ -71,8 +72,15 @@ onSnapshot(tagsCollection, (tagsDocs) => {
 	});
 });
 
-if (location.pathname.split("/").filter((elm) => elm)[3]) {
-	projectID = location.pathname.split("/").filter((elm) => elm)[3];
+if (
+	location.pathname.split("/").filter((elm) => elm)[3] ||
+	searchParams.get("project-id")
+) {
+	if (searchParams.get("project-id")) {
+		projectID = searchParams.get("project-id");
+	} else {
+		projectID = location.pathname.split("/").filter((elm) => elm)[3];
+	}
 	window.onbeforeunload = () => {
 		return "Are you sure you want to leave? Unsaved changes will be lost.";
 	};
@@ -87,7 +95,7 @@ if (location.pathname.split("/").filter((elm) => elm)[3]) {
 		document
 			.querySelector("body[state]")
 			.setAttribute("state", "Project Editing");
-		document.querySelectorAll(".tag").forEach((elm) => {
+		tagsContainer.querySelectorAll(".tag").forEach((elm) => {
 			const tagId = elm.getAttribute("data-tag-id");
 			if (!tagId)
 				throw new Error("The tag must have data-tag-id attribute attached");
@@ -403,6 +411,9 @@ async function uploadEdits() {
 	if (Object.entries(data).length == 0) return;
 
 	data.lastModified = serverTimestamp();
+
+	console.log(currentProjectRef);
+	console.log(data);
 
 	await updateDoc(currentProjectRef, data).then(() => {
 		location.href = `/project/${currentProjectData.id}`;
