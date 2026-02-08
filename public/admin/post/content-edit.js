@@ -84,6 +84,7 @@ function insertGithubLink() {
 			const githubLink = document.createElement("a");
 			githubLink.href = url;
 			githubLink.innerHTML = `<i class="fa fa-github" aria-hidden="true"></i>`;
+			githubLink.target = "_blank";
 			lastSelectedEditable.appendChild(githubLink);
 		}
 	}
