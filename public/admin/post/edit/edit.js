@@ -407,6 +407,12 @@ async function uploadEdits() {
 	if (currentProjectData.content !== content.innerHTML) {
 		data.content = content.innerHTML;
 	}
+	if (
+		currentProjectData.highlighted !==
+		document.getElementById("is-highlighted").checked
+	) {
+		data.highlighted = document.getElementById("is-highlighted").checked;
+	}
 
 	if (Object.entries(data).length == 0) return;
 
