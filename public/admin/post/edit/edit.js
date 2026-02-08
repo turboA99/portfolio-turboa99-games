@@ -32,7 +32,7 @@ if (location.pathname.split("/").filter((elm) => elm)[3]) {
 		.setAttribute("state", "Project Editing");
 	let docRef = doc(firestore, "projects", projectID);
 	onSnapshot(docRef, (project) => {
-		let projectData = project.data();
+		let projectData = project.data;
 		currentProjectData = projectData;
 		document
 			.querySelector("body[state]")
@@ -225,12 +225,9 @@ onSnapshot(projectsQuery, (projectDocs) => {
 			projectElement.onclick = () => {
 				currentProjectRef = doc(firestore, "projects", project.id);
 				document.currentProjectRef = currentProjectRef;
-				selectProject(projectElement, projectData);
+				selectProject(projectData.id);
 			};
 			projectElements.push(projectElement);
-			if (projectID && projectID == projectData.id) {
-				selectProject(projectElement, projectData);
-			}
 		} else {
 			console.warn("Skipping project with incomplete data:", projectData);
 		}
@@ -281,13 +278,11 @@ onSnapshot(tagsCollection, (tagsDocs) => {
 	});
 });
 
-function selectProject(element, projectData) {
-	const projectID = element.getAttribute("data-project-id");
+function selectProject(projectID) {
 	if (!projectID)
 		throw new Error(
 			"Cannot select a project without a data-project-id attribute",
 		);
-	if (!projectData) throw new Error("You must provide a project data");
 	location.href = `/admin/post/edit/${projectID}`;
 }
 
