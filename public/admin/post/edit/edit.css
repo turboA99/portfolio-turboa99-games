@@ -1,6 +1,6 @@
 @import "/shared.css";
 @import "/projects/projects.css";
-@import "/admin/post/create/post-create.css";
+@import "/admin/post/create/create.css";
 
 @layer default, projects, project, edit;
 @layer edit {

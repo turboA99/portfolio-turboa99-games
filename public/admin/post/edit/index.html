@@ -92,6 +92,7 @@
 				</div>
 				<div class="date-tags">
 					<time id="project-date"></time>
+					<time id="project-last-modified"></time>
 					<div id="tags-container"></div>
 				</div>
 				<div id="editor-container">
@@ -112,6 +113,14 @@
 								title="Create Paragraph"
 							>
 								<span class="material-symbols-outlined"> short_text </span>
+							</button>
+						</li>
+						<li>
+							<button
+								onclick="document.insertGithubLink()"
+								title="Insert Github Link"
+							>
+								<i class="fa fa-github" aria-hidden="true"></i>
 							</button>
 						</li>
 						<li>
@@ -146,7 +155,7 @@
 				></a>
 			</div>
 		</footer>
-		<script type="module" src="/auth.js"></script>
+		<script type="module" src="/backend.js"></script>
 		<script type="module" src="/floating-modal.js"></script>
 		<script type="module" src="/admin/post/content-edit.js"></script>
 		<script type="module" src="./edit.js"></script>

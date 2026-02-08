@@ -11,21 +11,36 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close"
+		/>
 	</head>
 	<body>
 		<nav>
 			<a href="/">Home</a>
-			<a href="/projects">Projects</a>
+			<a href="/projects" active>Projects</a>
 		</nav>
 		<main id="project-container">
 			<img id="project-image" src="" alt="Project Image" />
 			<p id="project-name"></p>
 			<div class="date-tags">
 				<time id="project-date"></time>
+				<time id="project-last-modified"></time>
 				<div id="project-tags"></div>
 			</div>
 			<div id="content"></div>
 		</main>
+		<dialog id="image-preview">
+			<button
+				class="close"
+				onclick="document.getElementById('image-preview').close()"
+				autofocus
+			>
+				<span class="material-symbols-outlined"> close </span>
+			</button>
+			<img id="image-preview-image" src="" alt="" />
+		</dialog>
 		<footer>
 			<p>&copy; 2025 <img src="/logo.png" alt="turboA99" /> Games</p>
 			<div id="social-links">
@@ -40,6 +55,7 @@
 				></a>
 			</div>
 		</footer>
+		<script type="module" src="/backend.js"></script>
 		<script type="module" src="/project/project.js"></script>
 		<script type="speculationrules">
 			{
