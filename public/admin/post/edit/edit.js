@@ -83,6 +83,7 @@ if (location.pathname.split("/").filter((elm) => elm)[3]) {
 	onSnapshot(docRef, (project) => {
 		let projectData = project.data();
 		currentProjectData = projectData;
+		currentProjectRef = doc(firestore, "projects", project.id);
 		document
 			.querySelector("body[state]")
 			.setAttribute("state", "Project Editing");
