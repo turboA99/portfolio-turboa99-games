@@ -2,8 +2,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebas
 import {
 	browserLocalPersistence,
 	browserSessionPersistence,
+	getAuth,
 	indexedDBLocalPersistence,
-	initializeAuth,
+	setPersistence,
 	onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
 
@@ -25,13 +26,12 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-export const auth = initializeAuth(app, {
-	persistence: [
-		indexedDBLocalPersistence,
-		browserLocalPersistence,
-		browserSessionPersistence,
-	],
-});
+export const auth = getAuth(app);
+setPersistence(auth, [
+	indexedDBLocalPersistence,
+	browserLocalPersistence,
+	browserSessionPersistence,
+]);
 export const firestore = initializeFirestore(app, {
 	localCache: persistentLocalCache(),
 });
