@@ -75,6 +75,12 @@ function insertParagraph() {
 
 function insertGithubLink() {
 	if (lastSelectedEditable) {
+		const currentSelection = window.getSelection();
+		if (!currentSelection) return;
+
+		const selectionRange = currentSelection.getRangeAt(0);
+		if (!selectionRange) return;
+
 		let href = window.prompt(
 			"Please insert the link to the github page",
 			"https://github.com/",
@@ -83,9 +89,14 @@ function insertGithubLink() {
 		if (url) {
 			const githubLink = document.createElement("a");
 			githubLink.href = url;
-			githubLink.innerHTML = `<i class="fa fa-github" aria-hidden="true"></i>`;
 			githubLink.target = "_blank";
-			lastSelectedEditable.appendChild(githubLink);
+			if (!selectionRange.collapsed) {
+				selectionRange.surroundContents(githubLink);
+				githubLink.innerHTML += `<i class="fa fa-github" aria-hidden="true"></i>`;
+			} else {
+				githubLink.innerHTML = `<i class="fa fa-github" aria-hidden="true"></i>`;
+				selectionRange.insertNode(githubLink);
+			}
 		}
 	}
 }
@@ -154,8 +165,24 @@ function insertVideo() {
 			});
 		}
 	};
-	lastSelectedSection.appendChild(link);
+	const currentSelection = window.getSelection();
+	currentSelection.anchorNode.parentElement.after(link);
 	link.focus();
+}
+
+function makeLink() {
+	const currentSelection = window.getSelection();
+	const currentRange = currentSelection.getRangeAt(0);
+	if (!currentRange) return;
+	const url = prompt(
+		"Insert link you would like to use",
+		"https://portfolio.turboa99.games",
+	);
+	const href = validateUrl(url);
+	if (!href) return;
+	const linkElement = document.createElement("a");
+	linkElement.href = href;
+	currentRange.surroundContents(linkElement);
 }
 
 function addFocusCallback(element) {
@@ -170,6 +197,8 @@ function addFocusCallback(element) {
 				element.textContent = "";
 			}
 		}
+		window.getSelection().selectAllChildren(element);
+		window.getSelection().collapseToEnd();
 	});
 	element.addEventListener("focusout", (ev) => {
 		validateContentEditable(element);
@@ -206,7 +235,7 @@ function addBackspaceCallback(element, elementToRemove = element) {
 
 function addEnterCallback(element) {
 	element.addEventListener("keydown", (ev) => {
-		if (ev.key === "Enter") {
+		if (ev.key === "Enter" && !ev.shiftKey) {
 			if (element.textContent) {
 				validateContentEditable(element);
 				ev.preventDefault();
@@ -234,6 +263,7 @@ document.insertImage = insertImage;
 document.insertYoutubeVideo = insertVideo;
 document.clearContentForPosting = clearContentForPosting;
 document.insertGithubLink = insertGithubLink;
+document.makeLink = makeLink;
 document.addContentEditableCallbacks = (element) => {
 	addFocusCallback(element);
 	addEnterCallback(element);
