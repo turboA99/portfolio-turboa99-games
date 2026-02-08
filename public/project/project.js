@@ -6,6 +6,8 @@ import {
 import { firestore } from "/backend.js";
 
 const urlParams = new URLSearchParams(window.location.search);
+const imageDialog = document.getElementById("image-preview");
+const imageDialogImage = document.getElementById("image-preview-image");
 let projectId = urlParams.get("id");
 
 if (!projectId) {
@@ -95,6 +97,15 @@ if (projectId) {
 		}
 		document.getElementById("content").innerHTML = docSnapshot.data().content;
 
+		document
+			.getElementById("content")
+			.querySelectorAll("img")
+			.forEach((image) => {
+				image.addEventListener("click", () => {
+					openImage(image.src);
+				});
+			});
+
 		docSnapshot.data().tags.forEach(async (tagId) => {
 			onSnapshot(doc(firestore, "tags", tagId), (tag) => {
 				if (!tag) return;
@@ -107,5 +118,12 @@ if (projectId) {
 				document.getElementById("project-tags").appendChild(tagElement);
 			});
 		});
+	});
+}
+
+function openImage(src) {
+	imageDialogImage.src = src;
+	imageDialogImage.addEventListener("load", () => {
+		imageDialog.showModal();
 	});
 }

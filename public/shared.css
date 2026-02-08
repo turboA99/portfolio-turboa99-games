@@ -43,6 +43,7 @@
 		--appear-transition-easing: ease-in-out;
 		--spatial-small-transition-duration: 100ms;
 		--spatial-small-transition-easing: ease-out;
+		--color-scrim: hsla(0, 0%, 0%, 0.5);
 
 		@media (prefers-color-scheme: dark) {
 			--color-background: hsla(0, 0%, 10%, 1);
@@ -130,6 +131,9 @@
 	html {
 		height: 100dvh;
 		scrollbar-gutter: stable;
+		&:has(dialog[open]) {
+			overflow: hidden;
+		}
 	}
 	body {
 		margin: 0;
