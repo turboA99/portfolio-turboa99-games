@@ -1,6 +1,5 @@
 import {
 	GoogleAuthProvider,
-	getAuth,
 	signInWithPopup,
 } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
 
