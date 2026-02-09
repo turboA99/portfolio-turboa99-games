@@ -239,6 +239,7 @@ function addBackspaceCallback(element, elementToRemove = element) {
 		element.addEventListener("keydown", (ev) => {
 			if (ev.key === "Backspace") {
 				if (element.textContent === "") {
+					ev.preventDefault();
 					if (element.previousElementSibling) {
 						elementToRemove.previousElementSibling.focus();
 					} else {
@@ -251,6 +252,7 @@ function addBackspaceCallback(element, elementToRemove = element) {
 	} else {
 		element.addEventListener("keydown", (ev) => {
 			if (ev.key === "Backspace") {
+				ev.preventDefault();
 				if (element.previousElementSibling) {
 					element.previousElementSibling.focus();
 				} else {
@@ -265,9 +267,9 @@ function addBackspaceCallback(element, elementToRemove = element) {
 function addEnterCallback(element) {
 	element.addEventListener("keydown", (ev) => {
 		if (ev.key === "Enter" && !ev.shiftKey) {
+			ev.preventDefault();
 			if (element.textContent) {
 				validateContentEditable(element);
-				ev.preventDefault();
 			}
 			if (element.nextElementSibling) {
 				element.nextElementSibling.focus();
