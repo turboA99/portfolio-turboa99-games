@@ -13,6 +13,10 @@ main {
 	gap: 2rem;
 	@media screen and (orientation: landscape) {
 		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: 1fr min-content;
+		& > :last-child {
+			grid-column: 1 / 4;
+		}
 	}
 	button {
 		font-size: xxx-large;

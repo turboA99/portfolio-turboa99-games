@@ -53,7 +53,15 @@ function insertHeader() {
 	addBackspaceCallback(header);
 	addFocusCallback(header);
 	addEnterCallback(header);
-	lastSelectedSection.appendChild(header);
+	const currentSelection = window.getSelection();
+	if (currentSelection.anchorNode.contentEditable) {
+		currentSelection.anchorNode.after(header);
+	} else if (currentSelection.anchorNode.parentElement.contentEditable) {
+		currentSelection.anchorNode.parentElement.after(header);
+	} else {
+		lastSelectedSection.appendChild(header);
+	}
+	header.focus();
 }
 
 function insertParagraph() {
@@ -69,7 +77,14 @@ function insertParagraph() {
 	addBackspaceCallback(paragraph);
 	addFocusCallback(paragraph);
 	addEnterCallback(paragraph);
-	lastSelectedSection.appendChild(paragraph);
+	const currentSelection = window.getSelection();
+	if (currentSelection.anchorNode.contentEditable) {
+		currentSelection.anchorNode.after(paragraph);
+	} else if (currentSelection.anchorNode.parentElement.contentEditable) {
+		currentSelection.anchorNode.parentElement.after(paragraph);
+	} else {
+		lastSelectedSection.appendChild(paragraph);
+	}
 	paragraph.focus();
 }
 
@@ -125,7 +140,15 @@ function insertImage() {
 			});
 		}
 	};
-	lastSelectedSection.appendChild(imageLink);
+	const currentSelection = window.getSelection();
+	if (currentSelection.anchorNode.contentEditable) {
+		currentSelection.anchorNode.after(imageLink);
+	} else if (currentSelection.anchorNode.parentElement.contentEditable) {
+		currentSelection.anchorNode.parentElement.after(imageLink);
+	} else {
+		lastSelectedSection.appendChild(imageLink);
+	}
+	imageLink.focus();
 }
 
 function insertVideo() {
@@ -166,7 +189,13 @@ function insertVideo() {
 		}
 	};
 	const currentSelection = window.getSelection();
-	currentSelection.anchorNode.parentElement.after(link);
+	if (currentSelection.anchorNode.contentEditable) {
+		currentSelection.anchorNode.after(link);
+	} else if (currentSelection.anchorNode.parentElement.contentEditable) {
+		currentSelection.anchorNode.parentElement.after(link);
+	} else {
+		lastSelectedSection.appendChild(link);
+	}
 	link.focus();
 }
 
