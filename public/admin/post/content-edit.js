@@ -35,11 +35,11 @@ function insertSection() {
 	const section = document.createElement("section");
 	content.appendChild(section);
 	lastSelectedSection = section;
-	insertHeader();
-	insertParagraph();
+	insertHeader(lastSelectedSection);
+	insertParagraph(lastSelectedSection);
 }
 
-function insertHeader() {
+function insertHeader(root = null) {
 	if (!lastSelectedSection) {
 		insertSection();
 		return;
@@ -54,17 +54,21 @@ function insertHeader() {
 	addFocusCallback(header);
 	addEnterCallback(header);
 	const currentSelection = window.getSelection();
-	if (currentSelection.anchorNode.contentEditable) {
-		currentSelection.anchorNode.after(header);
-	} else if (currentSelection.anchorNode.parentElement.contentEditable) {
-		currentSelection.anchorNode.parentElement.after(header);
+	if (!root) {
+		if (currentSelection.anchorNode.contentEditable) {
+			currentSelection.anchorNode.after(header);
+		} else if (currentSelection.anchorNode.parentElement.contentEditable) {
+			currentSelection.anchorNode.parentElement.after(header);
+		} else {
+			lastSelectedSection.appendChild(header);
+		}
 	} else {
-		lastSelectedSection.appendChild(header);
+		root.appendChild(header);
 	}
 	header.focus();
 }
 
-function insertParagraph() {
+function insertParagraph(root = null) {
 	if (!lastSelectedSection) {
 		insertSection();
 		return;
@@ -78,12 +82,16 @@ function insertParagraph() {
 	addFocusCallback(paragraph);
 	addEnterCallback(paragraph);
 	const currentSelection = window.getSelection();
-	if (currentSelection.anchorNode.contentEditable) {
-		currentSelection.anchorNode.after(paragraph);
-	} else if (currentSelection.anchorNode.parentElement.contentEditable) {
-		currentSelection.anchorNode.parentElement.after(paragraph);
+	if (!root) {
+		if (currentSelection.anchorNode.contentEditable) {
+			currentSelection.anchorNode.after(paragraph);
+		} else if (currentSelection.anchorNode.parentElement.contentEditable) {
+			currentSelection.anchorNode.parentElement.after(paragraph);
+		} else {
+			lastSelectedSection.appendChild(paragraph);
+		}
 	} else {
-		lastSelectedSection.appendChild(paragraph);
+		root.appendChild(paragraph);
 	}
 	paragraph.focus();
 }

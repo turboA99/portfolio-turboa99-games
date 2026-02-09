@@ -12,7 +12,7 @@
 		box-sizing: border-box;
 		font-family: "Roboto Mono", monospace;
 		position: relative;
-		color: var(--color-text);
+		color: inherit;
 	}
 	@property --nav-height {
 		syntax: "<length-percentage>";
@@ -140,6 +140,7 @@
 		background-color: var(--color-background);
 		width: 100%;
 		top: 0;
+		color: var(--color-text);
 	}
 
 	ul {
