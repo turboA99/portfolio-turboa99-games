@@ -212,6 +212,9 @@
 		padding-bottom: 2rem;
 		height: auto;
 	}
+	iframe {
+		border-width: 0px;
+	}
 	#floating-modal {
 		background-color: var(--color-surface);
 		width: fit-content;
