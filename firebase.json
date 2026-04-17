@@ -15,10 +15,6 @@
 			{
 				"source": "/admin/post/edit/**",
 				"destination": "/admin/post/edit/index.html"
-			},
-			{
-				"source": "**",
-				"destination": "/index.html"
 			}
 		]
 	},
